@@ -3,7 +3,7 @@ title: CCCS笔记 1 - 10
 category: /小书匠/日记/2023-11
 grammar_cjkRuby: true
 ---
-[toc!]
+[toc]
 前十章笔记参考于:https://shimo.im/docs/vkCKkj3YxGtygrVg/read
 课程链接：https://www.bilibili.com/video/av21376839?p=3
 
