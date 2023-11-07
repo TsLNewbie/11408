@@ -1,5 +1,5 @@
 ---
-title: CCCS笔记
+title: CCCS笔记 1 - 10
 category: /小书匠/日记/2023-11
 grammar_cjkRuby: true
 ---
