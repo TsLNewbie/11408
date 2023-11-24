@@ -62,12 +62,19 @@ ARP表：LAN中的每个IP结点(主机，路由器)维护一个表。
 图：
 ![enter description here](./images/1700836841582.png)
 
+
+
 A 构造 IP 数据报，其中 源IP地址 是 A 的 IP地址，目的IP地址 是 B的IP地址
 A 构造链路层帧，其中 源MAC地址 是 A 的MAC地址，目的IP地址 是  <font color="red">R(左)接口的MAC地址</font>，封装A到B的 IP数据报
-1.
 ![enter description here](./images/1700839110275.png)
-2.![enter description here](./images/1700839139451.png)
-3.
+第二步：
+帧从 A 发送到R
+R接收帧，提取IP数据报，传递给上层IP协议
+R 转发 IP 数据报（源和目的IP地址不变）
+R 创建链路层帧，其中源MAC地址是R（右）接口的MAC地址，目的MAC地址是B的MAC地址，封装A到B的IP数据报。
+![enter description here](./images/1700839139451.png)
+第三步：
+数据报到达，然后让B主机解码数据报。
 ![enter description here](./images/1700839179319.png)
 ## 5.5 以太网
 ### 以太网 Ethernet
