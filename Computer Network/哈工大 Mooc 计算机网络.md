@@ -56,8 +56,54 @@ ARP表：LAN中的每个IP结点(主机，路由器)维护一个表。
 通信过程：A 通过 路由器R 向 B 发送数据报(Datagram)
 - 关注寻址：IP地址（数据报中）和MAC地址（帧中）
 - 假设A知道B的IP地址(How?)
-- 假设A知道第一跳路由器R(左)
+- 假设A知道第一跳路由器R(左) 接口IP地址(How?)
+- 假设A知道第一跳路由器R(左) 接口MAC地址(How?)
 
+图：
+![enter description here](./images/1700836841582.png)
+
+A 构造 IP 数据报，其中 源IP地址 是 A 的 IP地址，目的IP地址 是 B的IP地址
+A 构造链路层帧，其中 源MAC地址 是 A 的MAC地址，目的IP地址 是  <font color="red">R(左)接口的MAC地址</font>，封装A到B的 IP数据报
+1.
+![enter description here](./images/1700839110275.png)
+2.![enter description here](./images/1700839139451.png)
+3.
+![enter description here](./images/1700839179319.png)
 ## 5.5 以太网
+### 以太网 Ethernet
+"统治地位"的有线LAN技术：
+- 造价低廉（NIC便宜)
+	- NIC (Network Interface Controller): 网络接口卡
+	- 网卡是一块被设计用来允许计算机在计算机网络上进行通讯的计算机硬件。由于其拥有MAC地址，因此属于OSI模型的第1层和2层之间。它使得用户可以通过电缆或无线相互连接。
+	- 每一个网卡都有一个被称为MAC地址的独一无二的48位串行号，它被写在卡上的一块ROM中。在网络上的每一个计算机都必须拥有一个独一无二的MAC地址。
+- 应用最广泛的LAN技术
+- 比令牌局域网和ATM等，简单、便宜
+- 满足网络速率需求： 10Mbps - 10Gbps
+
+#### 以太网：物理拓扑
+- 总线(bus): 上世纪90年代中期前流行
+	- 所有结点在同一 **冲突域(collision domain)**：可能彼此冲突
+- 星型(star): 目前主流网络拓扑
+	- 中心**交换机(switch)**
+	- 每个结点一个单独冲突域：结点间彼此不冲突
+
+总线示意图：
+![enter description here](./images/1700842736380.png)
+星型示意图：
+![enter description here](./images/1700842761081.png)
+
+#### 以太网：不可靠、无连接服务
+- **无连接(connectionless)**:发送帧的网卡与接收帧的网卡间没有“握手”过程
+- **不可靠(unreliable)**:接收网卡不向发送网卡进行确认
+	- 差错帧直接丢弃，丢弃帧中的数据恢复依靠高层协议(e.g,TCP),否则，发生数据丢失
+- 以太网的MAC协议：**采用二进制指数退避算法的CSMA/CD**
+
+### 以太网 CSMA/CD 算法
+算法过程：
+![enter description here](./images/1700843049685.png)
+
+
+
+
 ## 5.6 PPP 协议
 ## 5.7 802.11无线局域网
