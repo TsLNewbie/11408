@@ -281,4 +281,5 @@ else 泛洪(flood)/*向除收到该帧的接口之外的所有接口转发*/
 ![enter description here](./images/1701268656771.png)
 
 ## 5.6 PPP 协议
+PPP协议：PPP (Point to Point Protocol)
 ## 5.7 802.11无线局域网
