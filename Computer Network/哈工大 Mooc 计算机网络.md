@@ -334,4 +334,17 @@ PPP数据帧：
 
 图：
 ![enter description here](./images/1701448041883.png)
+
+PPP数据控制协议：
+
+在交换网络层数据之前，PPP数据链路两端必须：
+- 配置PPP链路
+	- 最大帧长
+	- 身份认证(authentication)
+	- etc.
+- 学习/配置网络层信息
+	 - 对于P协议：通过交换PCP协议(IP Control Protocol)报文(P分组首部的“上层协议”字段取值：8021)，完成P地址等相关信息配置
+
+图：
+![enter description here](./images/1701448171214.png)
 ## 5.7 802.11无线局域网
