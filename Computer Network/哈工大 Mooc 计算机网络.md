@@ -344,7 +344,62 @@ PPP数据控制协议：
 	- etc.
 - 学习/配置网络层信息
 	 - 对于P协议：通过交换PCP协议(IP Control Protocol)报文(P分组首部的“上层协议”字段取值：8021)，完成P地址等相关信息配置
-
+   
 图：
 ![enter description here](./images/1701448171214.png)
-## 5.7 802.11无线局域网
+## 5.7 802.11无线局域网 - WIFI
+
+IEEE 802.11 无线局域网
+- 802.11b
+ 	- 2.4-2.5GHz免费频段(unlicensed spectrum)
+	- 最高速率：11Mbps
+	- 物理层采用直接序列扩频(DSSS)技术
+		- 所有主机使用相同的码片序列
+- 802.11a
+	- 5-6 GHz 频段
+	- 最高速率：54 Mbps
+- 802.11g
+	- 2.4-2.5GHz频段
+	- 最高速率：54Mbps
+- 802.11n:多天线(MIMO)
+	- 2.4-2.5GHz频段
+	- 最高速率：600Mbps
+
+！均使用**CSMA/CA多路访问控制协议**
+！均有基础设施（基站）网络模式和特定网（自组网）网络模式
+
+不同标准的详细对比：
+![enter description here](./images/1701700530135.png)
+
+### 体系结构
+无线主机与基站通信
+- 基站(base station)=访问点(access point-.AP)
+
+基本服务集BSS(BasicService Set),也称为单元(cell) 
+- 基础设施网络模式：
+	- 无线主机
+	- AP:基站
+- 自组网(ad hoc)模式：
+	- 只有主机
+
+图：典型结构
+![enter description here](./images/1701700658667.png)
+
+
+802.11：信道与AP关联
+
+802.11b:2.4GHz-2.485GHz频谱划分为11个不同
+频率的信道
+- 每个AP选择一个频率（信道）
+- 存在干扰可能：相邻的AP可能选择相同的信道！
+
+主机：必须与某个AP关联(associate)
+- 扫描信道，监听包含AP名称（服务集标识符-SSD)和MAC地址的信标(beacon)帧
+- 选择一个AP进行关联
+- 可能需要进行身份认证
+- 典型情形：运行DHCP获取P地址等信息
+
+### 802.11AP关联：被动扫描与主动扫描
+图：
+![enter description here](./images/1701701010380.png)
+
