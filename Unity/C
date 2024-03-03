@@ -1,0 +1,13 @@
+---
+title: C# 基础内容
+category: /小书匠/日记/2024-03
+grammar_cjkRuby: true
+---
+参考视频：[新印象 Unity 2020游戏开发基础与实战](https://www.shuyishe.com/bookDetails?id=UB77c7a31cc7468) 其中的视频教学内容。
+
+C# 是微软公司发布的一种由C和C\+\+衍生出来的**面向对象**的编程语言，运行于 .NET Framework 和 .NET Core(完全开源，跨平台) 之上的高级程序设计语言。
+C#编程 比 C++ 简单很多 ==(真的吗？) #9E9E9E==
+
+C# 其中很重要的功能就是垃圾回收，可以让应用不使用某些内存的时候，自动释放。
+
+
