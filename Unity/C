@@ -449,7 +449,28 @@ for ( init; condition; increment )
 **流程图：**
 ![](./images/1709559738472.png)
 
-## do...while
+**foreach**
+使用 foreach 可以迭代数组或者一个集合对象。
+
+用来遍历集合类型，例如数组、列表、字典等。它是一个简化版的 for 循环，使得代码更加简洁易读。
+```c#
+foreach (var item in collection)
+{
+    // 循环
+}
+
+//举个例子
+
+foreach (int tmp in array)
+{
+	Console.WriteLine(tmp);
+}
+```
+collection 是要遍历的集合，item 是当前遍历到的元素。
+
+
+
+## do...while循环
 >不像 for 和 while 循环，它们是在循环**头部测试循环条件**。do...while 循环是在循环的**尾部**检查它的条件。
 do...while 循环与 while 循环类似，但是 do...while 循环会确保至少执行一次循环。
 
@@ -465,3 +486,110 @@ do
 
 **流程图：**
 ![](./images/1709559898797.png)
+## 嵌套循环
+
+循环 和 判断一样，可以嵌套。因此具体效果是：
+```c#
+for ( init; condition; increment )
+{
+   for ( init; condition; increment )
+   {
+      statement(s);
+   }
+   statement(s);
+}
+
+while(condition)
+{
+   while(condition)
+   {
+      statement(s);
+   }
+   statement(s);
+}
+
+do
+{
+   statement(s);
+   do
+   {
+      statement(s);
+   }while( condition );
+
+}while( condition );
+```
+
+# 10.冒泡排序（七大排序之一）
+额外参考： [数据结构-- 七大排序算法](https://blog.csdn.net/qq_55660421/article/details/122704501)
+>每次冒泡排序操作都会将相邻的两个元素进行比较，看是否满足大小关系要求，如果不满足，就交换这两个相邻元素的次序，一次冒泡至少让一个元素移动到它应该排列的位置，重复N次，就完成了冒泡排序。
+
+
+![](./images/1709561000869.png)
+具体实现：
+```C++
+/*
+     *冒泡排序法
+     */
+    public void bubbleSort(int[] arr, int n){
+        if(n<=1){
+            return;
+        }
+        for(int i=0;i < n;i++){
+            boolean flag = false;
+            for (int j = 0; j < n-i-1; j++) {
+                if (arr[i - 1] > arr[i]) {
+                    swap(arr, i - 1, i);
+                    flag = true;
+                }
+            }
+            if(!flag) break;//没有数据交换，数组已经有序，退出排序
+        }
+    }
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+```
+
+# 11.函数/方法
+
+一个函数是把一些相关的语句组织在一起，用来执行一个任务的语句块。
+每一个C#程序至少有一个带有Main函数的类。
+方法中可以包含参数，参数包括**普通传参**、**引用传参**、**输出传参**。
+
+```c#
+using System;
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			int a = 10;
+			int b = 5;
+			// a,b分别自增，然后相加，输出和
+			int num = add(a,b);
+			console.WriteLine(num);
+			console.ReadKey();		
+		}
+		
+		static int add(int a,int b) //这个函数其实可以是一个int类型的数据
+		{
+			a++;
+			b++;
+			int num = a+b;
+			return num; //函数用的是int，因此返回一个int。
+		}
+	
+	}
+
+
+
+}
+``` 
+
+## 递归：
+在任何一个方法中，我们都可以调用其他方法，但是也可以调用自身方法，当调用自身方法的时候，就把它叫做**递归方法**
+**注意：** 递归方法一定要有出口，不然会造成死循环。
+(就是一定要做个判断，可以结束这个函数的，不然就死循环了，程序就boom了。)
+
