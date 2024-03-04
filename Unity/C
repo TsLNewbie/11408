@@ -63,6 +63,7 @@ C# 注释有两种， // 和 /* \*/
 ....
 
 ## 数据类型:
+<a class="xsj_anchor" name="xsj_1709541070261"></a>
 ![](./images/1709458882487.png)
 
 # 常量与变量
@@ -232,4 +233,30 @@ a = a%b ; a%=b;
 System.Console.WriteLine("Hello World！");
 ```
 此方法为 Console 类 的输出方法之一。（C\+\+中类与对象，其中函数调用）
-如果程序开始处包含 "using" 指令 ，则可省略 System 类直接调用他们。（C\+\+中有：using namespace std，而C#是 using system，Python也有类似指令：from openpyxl import \*）
+如果程序开始处包含 "using" 指令 ，则可省略 System 类直接调用他们。
+>C\+\+中有：using namespace std，
+C#是 using system，
+Python也有类似指令：from openpyxl import \*
+
+
+## 输入函数
+```C#
+int n = Console.Read();
+
+string str = Console.ReadLine();
+```
+
+> 番外：
+> 在C++中的 return 0; 的作用
+> 在C# 中用 Console.ReadKey(); 取代.
+
+# 类型转换
+## 隐式转换
+描述：是一种安全类型的转换，不会导致数据丢失，因此不需要任何特殊的语法。**由小到大时**，系统**自动**的进行隐式转换。
+
+[C# 基础内容(速通）](xsjapp://doc/5cdab02f-4f05-42fc-a056-7041b54ccd81#xsj_1709541070261)
+
+int a = 5;
+byte b = 6;
+a = b; ?
+b = a; ?
