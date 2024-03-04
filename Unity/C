@@ -326,3 +326,72 @@ c = a>b?a:b //c取a,b之间最大的值
 ```
 **即：** 如果a>b,则结果为a,否则结果为b
 
+# 分支结构
+**顺序结构：** 代码从上往下，从左往右，依次执行
+**分支结构(if,switch)：** 当我们的程序执行到某个位置的时候，进行条件判断，根据判断的结果来执行不同的操作；
+**循环结构(while)：** 在满足某个条件的时候反复执行一个语句序列（循环）。
+
+![](./images/1709542982040.png)
+## if 分支结构(判断)
+
+```c#
+if(条件表达式1){ // 条件表达式：true or false
+	语句1;
+}
+
+if(条件表达式2){ 
+	语句1;
+}
+else{
+	语句2;
+}
+
+if(条件表达式3){ 
+	语句1;
+}
+else if (条件表达式4){
+	语句2;
+}
+
+```
+这个和C\+\+，C基本一模一样。
+
+举个例子:
+```c#
+using System;
+namespace Test
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			//输入字符串
+			string str = System.Console.ReadLine();
+			//字符串转为整数
+			int num = Convert.Tolnt32(str);
+			if(num > 10)
+			{
+				Console.WriteLine(num * 2);
+			}
+			Console.ReadKey();
+		}
+	}
+}
+```
+
+## switch分支结构
+switch 匹配分支。
+break 跳出 switch。（跳出一个）
+case都没匹配到，就执行default
+没有default就结束。
+多个case可以运行一个语句块。
+```c#
+switch(表达式a)
+{
+	case 值1:{语句;break;}
+	case 值2:{语句;break;}
+	...
+	case 值n:{语句;break;}
+	default:{语句;break;}
+}
+```
