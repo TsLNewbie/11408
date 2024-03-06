@@ -1243,3 +1243,153 @@ class Dog: Enemy
 可能会产生歧义。
 
 # 22.接口
+
+接口定义了所有类继承接口时应遵循的语法合同。接口定义了语法合同 **"是什么"** 部分，派生类定义了语法合同 **"怎么做"** 部分。
+
+接口是一组包含了类或结构可以实现的功能的定义，使得这些类或结构可以保持一致的形式与特征。
+接口也为c#提供了多继承的功能实现。
+
+比如说 **测量体温** ，超市 继承了 测量体温 这个接口，所有进超市的人都需要 测量体温。
+
+>谁接入了我这个接口，谁就要遵守里面的功能实现。
+
+特点：
+
+ 1. 接口可以包含事件、索引器、方法和属性，不能包含字段
+ 2. 接口是引用类型
+ 3. 接口只包含了功能的定义，不包含功能的实现
+ 4. 接口默认访问级别为oublic,.不可以修改
+ 5. 接口被实现后，就必须实现接口中的所有成员内容
+
+```C#
+interface 接口名称
+{
+	void func(); //功能的定义
+}
+```
+
+代码例子：
+```c#
+using System;
+namespace ConsoleApp1
+{
+	//人
+	class Person
+	{
+		public void Eat()
+		{
+			Console.WriteLine("吃东西");
+		}
+	}
+	
+	//狼
+	class Wolf
+	{
+	 public void Attack(){}
+	}
+	
+	//狼 接口
+	interface IWolf
+	{
+		void Attack();
+	}
+
+	//狼人
+	class WolfMan: Person,IWolf //如果要两个继承，那么就只能是接口了
+	{
+		public void Attack() // 写上这个，就不会报错了
+		{
+			Console.WriteLine("攻击");
+		}
+	}
+}
+```
+
+## 接口与抽象
+
+**共同点：**
+
+ 1. 都不能被实例化
+ 2. 都包含需要类或结构体实现的成员
+
+**不同点：**
+
+ 1. **抽象类**还可以拥有非抽象成员，**接口**不能拥有
+ 2. **抽象成员**可以用不同的访问修饰符修饰，**接口成员**只能是public
+ 3. **抽象类**可以包含构造、析构方法，静态成员与常量，**接口**不能
+ 4. **抽象类**仅支持单继承，**接口**支持多继承
+
+# 23.泛型（单一方法 支持多个类型数据）
+
+我们在编写程序时经常遇到多个模块的**功能非常相似**，只是因为参数类型不同，所以分别写多个方法处理每种数据类型，因为方法的参数类型不同没法重用同样功能的代码.
+
+```C#
+public void Add(int num1,int num2) 
+{
+	Console.WriteLine(num1+num2);
+}
+public void Add(double num1,double num2)
+{}
+	Console.WriteLine(num1+num2);
+}
+public void Add(float num1,float num2) //希望能支持
+{
+	Console.WriteLine(num1+num2);
+}
+```
+
+利用**装箱、拆箱**操作！
+使用单个方法实现各类型数据相加
+```C#
+public void Add(object obj1,object obj2)
+{
+	if (obj1 is int && obj2 is int)
+	{
+		Console.WriteLine((int)obj1 +(int)obj2);
+	}
+	if (obj1 is float && obj2 is float)
+	{
+		Console.WriteLine((float)obj1 +(float)obj2);
+	}
+}
+```
+>会出现装箱、拆箱操作，这将在托管堆上分配和回收大量的变量，若数据量大，则性能损失非常严重
+>在处理引用类型时，虽然没有装箱和拆箱操作，但将用到数据类型的强制转换操作，增加处理器的负担
+
+
+**泛型！**
+使用泛型实现数字交互
+C#中的泛型能够将类型作为参数来传递，即在创建类型时用一个特定的符号如 **“T”来作为一个占位符** ，代替实际的类型，等待在实例化时再用一个实际的类型来代替：
+```C#
+public static void Swap<T>(ref T value0,ref T value1)
+{
+	T temp value0;
+	value0 value1;
+	value1 temp;
+}
+
+//访问修饰符 返回值类型 方法名<泛型类型列表>(参数列表){方法体}
+void TEST<T,U>(T p1,U p2); 
+//此时你用什么数据类型去调用这个方法都可以，系统会推断类型。
+```
+√使用泛型可以重用代码，保护类型的安全以及提高性能
+√降低强制转换或装箱操作的成本和风险
+√可以对泛型参数进行限定以访问特定数据类型的方法
+
+
+为了防止传入的类型导致方法运行出措，可以对泛型进行一定的约束
+
+约束关键词：**Where**
+
+ - where T:struct:表示泛型T是值类型（小数，整数，char,bool,struct))
+ - where T:class:表示泛型T是引用类型
+ - where T:new():表示这个泛型具有一个无参数的构造方法，如果有多个约束new(必须放在最后
+ - where T:基类名：表示这个泛型是该基类或者其派生类
+ - where T:接口名：表示泛型是实现了该接口的类型
+ - where T:U:为T提供的类型参数必须是为U提供的参数或派生自为U提供的参数。
+
+
+如何写约束？
+```c#
+void Test<T,U>(T p1,U p2)
+```
