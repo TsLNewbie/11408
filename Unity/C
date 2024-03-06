@@ -1195,3 +1195,51 @@ Main函数本身就加上 static ，所以若写另一个函数，想要可以�
 **运动员训练：**？？？【需要具体说哪类运动员，不然无法表达怎么训练】
 
 这类方法，称之为**抽象方法**
+
+对于运动员来说，你没办法描述的东西。（对于运动员来说，你没办法描述出运动员的训练内容）
+
+```c#
+abstract class Player //可以在class 前面写
+{
+public abstract void Train(); //也可以在方法前面写
+}
+```
+
+◆抽象类**不能使用new关键字进行实例化**，抽象类是不完整的
+
+◆抽象方法必须放在抽象类里，class前面加修饰符**abstract**
+
+◆抽象方法返回值前面也要加修饰符**abstract**
+
+◆抽象方法**没有方法体**，格式为：**访问修饰符abstruct返回值类型方法名**（参数列表）：
+
+◆抽象方法**必须被子类重写并实现，或使其子类依旧为抽象类**
+
+◆抽象方法的**访问修饰符不能是private,不然就无法被子类访问了，也就无法重写了**
+
+```c#
+abstract class Enemy
+{
+	public abstract void Attack(); //public virtual void attack 也可以是这样做。
+}
+
+class Zombie: Enemy 
+{
+	public override void Attack() //有abstract的话这必须得写，不然就会报错。
+	{
+		Console.WriteLine("抓人");
+	}
+class Dog: Enemy
+{
+	public override void Attack()
+	{
+		Console.WriteLine("咬人")
+	}
+}
+}
+```
+
+虽然virtual 和 abstract 在子类差不多，但是virtual 是可以实例化的，如果被其他人调用你这父类，有可能就会让他 Enemy e = new Enemy();
+可能会产生歧义。
+
+# 22.接口
