@@ -1391,5 +1391,64 @@ void TEST<T,U>(T p1,U p2);
 
 如何写约束？
 ```c#
-void Test<T,U>(T p1,U p2)
+void Test<T,U>(T p1,U p2) where U: struct
+	where T:Computer,new()
+{
+
+}
 ```
+
+# 24.集合（Collection）
+![](./images/1709734892056.png)
+
+
+数组很好用，但是可惜是静态空间，
+```C#
+int[]intArray new int [3];
+intArray [0]=1;
+intArray[1] =2;
+intArray [2]=3;
+intArray[3]=4;//报错数组越界
+```
+
+集合：
+集合原本是**数学**上的一个概念，表示**一组具有某种性质的数学元素**，引用到程序设计中表示**一组具有相同性质的对象**。集合好比**容器**，将一系列相似的元素组合一起，是一个**特殊的类**，和数组一样，**可以通过索引访问集合成员，也可以通过”键”来访问，** 与传统数组不同的是，集合的**大小可以动态调整**，可以在**运行时添加或删除元素。**
+
+集合可分为两类：泛型集合与非泛型集合
+
+泛型集合类一般位于System.Collections.Generic名称空间，
+
+非泛型集合类位于System.Collections名称空间。
+
+此外，System.Collections.Specialized名称空间中也包含一些有用的集合类。
+
+## 1.动态数组(ArrayList)
+
+ - 动态的增加和减少元素
+ - 实现了ICollection和IList和IEnumerable接口
+ - 灵活的设置数组的大小
+ - 不安全的集合类型
+ - 其元素为值类型时，效率不高（装箱和拆箱耗性能）
+
+
+![](./images/1709735288177.png)
+
+常用方法：在[菜鸟教程](https://www.runoob.com/csharp/csharp-arraylist.html) 看看
+代码：
+```C#
+using System;
+using System.Collections;
+...
+
+static void Main(string[] args)
+{
+	ArrayList array = new ArrayList(); //创建和数组不一样。
+	array.Add(0);
+	array.Add(1);
+	Console.WriteLine(array[0]); //后续操作和正常数组差不多
+	
+	Console.ReadKey();
+}
+```
+
+## 2.
