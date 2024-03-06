@@ -1457,24 +1457,154 @@ static void Main(string[] args)
 	bool res = array.Contains("新元素");
 	//清空
 	array.Clear();
+	//个数
+	int amount = array.Count;
 	Console.ReadKey();
 }
 ```
 
-## 2.堆栈 Stack
+## 2.堆栈 Stack (就是数据结构的那个堆)
 
+>数据结构提出的参考，石头堆~
  - 后进先出(LIFO)的一种数据结构，本质上堆栈也是一种线性结构
  - 线性结构的基本特点：即每个节点有且只有一个前驱结点和一个后续节点
  - 随着像Stack中添加元素，容量通过重新分配按需自动增加
  - 可以接受null作为有效值
  - 允许重复的元素
  - 不安全的数据结构
- - 其泛型为Stack<T>
+ - 其泛型为Stack\<T\>
+
+![](./images/1709735683979.png)
+代码：
+```C# 
+static void Main(string[] args)
+{
+	//创建堆栈
+	Stack stack = new Stack();
+	//入栈
+	stack.Push(1);
+	stack.Push("2");
+	//出栈
+	object num = stack.Pop();
+	//仅获取最上面的内容而不出栈
+	num = stack.Peek();
+	//个数
+	int amount = stack.Count;
+}
+```
+
+## 3.队列Queue (和数据结构也是一样)
+
+>用数据结构的例子，就是排队。
+
+ - 先进先出(FIFO)的一种数据结构
+ - 可以接受nulI作为有效值
+ - 允许重复的元素
+ - 不安全的数据结构
+ - 其泛型为Queue\<T\>
+
+![](./images/1709735873606.png)
+
+```c#
+static void Main(string[] args)
+{
+	//队列
+	Queue queue = new Queue();
+	//入队
+	queue.Enqueue(1);
+	queue.Enqueue(2.2f);
+	//出队
+	object obj = queue.Dequeue();  //装箱拆箱。
+	//获取准备出队的元素，而不让出队(?)
+	obj = queue.Peek();
+	
+	Console.ReadKey();
+}
+```
+
+## 4. 哈希表Hashtable
+>Hashtable 类代表了一系列基于键的哈希代码组织起来的**键/值**对。它使用键来访问集合中的元素。
+当您使用键访问元素时，则使用哈希表，而且您可以识别一个有用的键值。哈希表中的每一项都有一个键/值对。键用于访问集合中的项目。
+ - 处理和表现类似key-value的键值对的集合
+ - Key和Value都是object:类型
+ - key值必须唯一，区分大小写
+ - Value可以是值类型变量，也可以是对象
+
+![](./images/1709736095405.png)
 
 ```C#
 static void Main(string[] args)
 {
-
-
+	//创建哈希表
+	Hashtable ht = new Hashtable();
+	//添加对应的键值对
+	ht.Add("name","王小虎"); //name为键，王小虎为值
+	ht.Add("score",100);
+	ht["age"] = 18; // age为键，18为值
+	//查询是否包括某个键或值 键Key 值Value
+	ht.ContainsKey("name")
+	ht.ContainsValue("王小虎";)
+	//移除
+	ht.Remove("name");
+	object score = ht["score"];
+	
+	
+	Console.ReadKey();
 }
 ```
+
+## 25.泛型集合
+以上四种的集合，进行泛型后的效果：
+```c#
+using System.Collections.Generic; //泛型集合要引用的命名空间。
+
+...
+
+static void Main(string[] args)
+{
+	//泛型
+	//数组
+	List<int> list = new List<int>(); //只能入 int
+	list.Add(2);
+	List<float> list2 = new List<float>(); // 只能入 float
+	list2.Add(3.3f);
+	//其他方法都和原本的一样
+	
+	//堆栈
+	Stack<int> stack = new Stack<int>();
+	stack.Push(3);
+	
+	//队列
+	Queue<int> queue = new Queue<int>();
+	queue.Enqueue(5);
+	
+	//哈希表泛型 --> 字典(Dictionary) （在python中学过）
+	Dictionary<string,int> dic = new Dictionary<string,int>();
+	dic.Add("name",11);
+	dic["name2"] = 22;
+	
+	//字典取值
+	int value;
+	dic.TryGetValue("haha",out value) //这个方法名称很好懂。
+
+
+	Console.ReadKey();
+}
+
+```
+
+# 26.委托Delegate
+C#中的委托类似于C/C\+\+中的函数指针。
+委托是一种可以存放方法的自定义类型。
+```c#
+void test()
+{
+...
+}
+```
+定义委托类型：
+public delegate void Func();
+声明该委托变量：
+Func func;
+该委托变量保存一个方法
+func =  test;
