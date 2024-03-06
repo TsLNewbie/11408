@@ -593,4 +593,594 @@ using System;
 **注意：** 递归方法一定要有出口，不然会造成死循环。
 (就是一定要做个判断，可以结束这个函数的，不然就死循环了，程序就boom了。)
 
-## 12.结构体与枚举
+# 12.结构体(Struct)与枚举(Enum)
+
+## 枚举
+枚举是一组自定义名称的整型常量。
+枚举类型是使用enum关键字声明的。
+C#中枚举是**值类型**。
+在游戏开发中，常常使用枚举来进行**类型的定义**。
+
+
+```c#
+enum<enum_name>
+{
+	enumeration list
+}
+```
+其中：
+enum_name 指定枚举的类型名称。
+enumeration list 是一个用逗号分隔的标识符列表。
+
+例子：
+```c#
+using System;
+
+enum PlayerState
+{
+	idle,
+	run,
+	attack,
+	die
+}
+
+class Program
+{
+	static void Main(string[] args)
+	{
+		PlayerState state = PlayerState.idle;
+		state = PlayerState.run;
+		if(state == PlayerState.die)
+		{
+		 Console.WriteLine("GameOver");
+		}
+		Console.ReadKey();
+	}
+
+}
+```
+
+## 结构体：（和类 差不多，但是结构体是值类型）
+在C#中，结构体是值类型数据结构。
+结构体可以存储多个数据类型的相关数据。
+C#中结构体也是**值类型。**（真的值复制了一份）
+struct关键字用于创建结构体。
+
+和C++的结构体一样东西。
+```c#
+struct Books
+{
+   public string title;
+   public string author;
+   public string subject;
+   public int book_id;
+   
+   //For Example:
+   public string name;
+   public int age;
+   public int score;
+};  
+```
+
+结构体通常会用在你需要这样的情况：
+```c#
+string name="小明";
+int age =18;
+int score 100;
+
+string name2="小李";
+int age2 =20;
+int score2 =88;
+
+
+//用上结构体之后可以这样写。
+Student xiaoMing;
+xiaoMing.name = "小明";
+xiaoMing.age = 18;
+xiaoMing.score = 100;
+
+Student xiaoLi;
+xiaoLi.name = "小明";
+xiaoLi.age = 20;
+xiaoLi.score = 88;
+```
+
+
+# 13.类与对象！
+
+## 面向过程 vs 面向对象
+- **面向过程**
+就是分析出解决问题所需要的**步骤**，然后用函数把这些步骤一步一步实现，使用的时候一个一个依次调用就可以了。
+
+- **面向对象**
+面向对象是把构成问题事务**分解成各个对象**，建立对象的目的不是为了完成一个步骤，而是为了描叙某个事物的状态**特征**与**行为**。
+
+- **面向对象的优点**
+**易维护、易复用、易扩展，** 由于面向对象有**封装**、**继承**、**多态**性的特性，可以设计出低耦合的系统，使系统更加灵活、更加易于维护。
+
+>面向对象的名言：**万物皆对象。**
+>例子：电脑显示器是对象，手机是对象，音响是对象，人是对象....
+
+>举个例子：把大象放进冰箱。
+>面向过程：
+>打开冰箱 > 把大象放进去 > 关闭冰箱
+>
+>面向对象：
+>冰箱：打开，关闭...
+>大象：进入冰箱，出冰箱...
+>冰箱.打开 > 大象.进入冰箱 > 冰箱.关闭。
+
+![](./images/1709704949436.png)
+代码：
+```c#
+//<summary>
+//人类
+//</summary>
+class Person
+{
+	public string name;//姓名
+	public int age;//年龄
+	///<summary>
+	//聊天
+	//</summary>
+	public void Chat()
+	{
+		int test = 10; //局部变量
+		Console.WriteLine("我是"+name);
+	}
+}
+```
+
+```c#
+static void Main(string[] args)
+{
+	Person XiaoWang = new Person(); //创建一个对象 类名 对象名= new 类名();
+	XiaoWang.name = "小王"; //这个是幅值
+	XiaoWang.Chat(); //这个是调用函数
+
+
+}
+```
+
+# 14.名称空间
+
+命名空间的设计目的是提供一种让一组名称与其他名称分隔开的方式。
+在一个命名空间中声明的类的名称与另一个命名空间中声明的相同的类的名称**不冲突。**
+
+例子：
+```c#
+//这两个重名了，就产生了冲突。
+class Person{}
+
+class Person{}
+
+//方法一
+class FYPerson{}
+class XYPerson{}
+
+//方法二 命名空间！
+
+namespace FY{
+	Person
+}
+
+namespace XF
+{
+	Person
+}
+调用的时候
+FY.Person
+XF.Person
+```
+
+视频中参考：
+![](./images/1709705652895.png)
+其中这namespace Test 便是命名空间。 名称空间 = Test.
+
+：然后即使在不同的文件中，都可以调用同命名空间的东西。
+
+如果不是同一个名称空间里，有两种方法可以调用。
+
+第一种
+```c#
+//假设另一个代码的命名空间 = Game
+
+Game.Enemy enemy = new Enemy();
+```
+第二种
+```c#
+//在最头部里加入 using Game.
+using Game;
+.
+.
+.
+Enemy enemy = new Enemy();
+```
+
+# 15.Refout（传参）
+> 内容： ref ， out
+
+```c#
+using System; 
+
+namespace Test // 命名空间
+{
+	class Program // 类
+	{
+		static void Main(string[] args) //固定的Main函数
+		{
+			int a = 10;
+			int b ; //out的变量，必须是没幅值的。
+			Test(ref a,out b); //函数里加ref，这里也得加。
+			console.WriteLine(a);
+			console.ReadKey();		
+		}
+		//如果是正常形式的 int a = a（复制）;
+		//但是如果加上了ref,则会变成引用，此函数里的a = 外面的 a
+		static void Test(ref int a,out int y) //ref引用方式
+		{
+			a++;
+			y = 10; //使用out的话里面的变量必须得幅值。
+		}
+	
+	}
+
+
+
+}
+```
+
+# 16.访问修饰符(封装)
+
+**public:**
+同一程序集中的任何其他代码或引用该程序集的其他程序集都可以访问该类型或成员。
+（所有对象都可以访问）
+
+**private:**
+只有同一class或struct中的代码可以访问该类型或成员。
+（对象本身在对象内部可以访问；）
+
+**protected:**
+只有同一class或者从该class派生的class中的代码可以访问该类型或成员。
+（只有该类对象及其子类对象可以访问）
+
+**internal:**
+同一程序集中的任何代码都可以访问该类型或成员，但其他程序集中的代码不可以。
+（同一个程序集的对象可以访问；）
+
+**protected internal:**
+该类型或成员可由对其进行声明的程序集或另一程序集中的派生class中的任何代码访问。
+（访问限于当前程序集或派生自包含类的类型。）
+
+**private protected:**
+只有在其声明程序集内，通过相同class中的代码或派生自该class的类型，才能访问类型或成员。
+
+![](./images/1709706565086.png)
+
+# 17.继承
+**继承**可以使得子类具有父类的属性和方法，让子类拥有与父类相同的特征与行为，并通过增加新的属性与方法来扩展该类的特性。
+
+```C#
+class基类
+{
+...
+}
+class派生类：基类
+{
+...
+}
+
+```
+
+## 构造函数（方法）
+```c#
+class Person
+{
+	public string name;
+	public int age;
+	
+	//构造方法
+	public Person(string name,int age) //如果没写，就调用空的；如果写了，就调用这个。
+	{
+		//只要调用构造函数，就赋值了。
+		this.name = name;  //this 就可以让他一定 等于这个class里面的变量name了。
+		this.age = age; //这样就可以改成这样了，可以看上去是重名的，但多了个this，这两个就不一样了。
+	}
+	
+	//其实构造函数可以多个！
+	public Person() 
+	{
+	//这种情况就是如果你没写参数，就调用这个；如果写了，调用上面那个。//重载（C++里也有的内容）
+	}
+}
+```
+
+```c#
+using System;
+namespace Test
+{
+	class Program
+	{	
+		static void Main(string[] args)
+		{
+			Person person = new Person("小虎!","24"); 
+			//构造函数改了，这边也得对应的修改。其实就是调用函数的规则。
+			Console.ReadKey();
+		}
+	}
+}
+```
+
+## 继承
+继承后，新的类 叫做 派生类 ，而原本的叫 基类 （或者 父类和子类）
+派生类拥有 基类的 内容。**（完全继承）**
+
+**注意：**
+如果 基类存在 private 则不能使用了（类内还是类外都是）
+但是如果是 protected ，类外不能用，但类内是可以用的。
+
+派生类是可以自己加东西的。
+```c#
+class XiaoWang:Person //继承。
+{
+	void test()
+	{
+		
+	}
+}
+```
+
+**额外说明：**
+如果父类（基类）存在 **构造函数且带有变量**，那么子类也必须也要有一个 **构造函数且带有变量**（相对应的）。
+且在写入上有一些区别：
+```c#
+//父类的：
+public Person(string name)
+{
+
+}
+
+...
+
+//子类的:
+public XiaoWang(string name):base(name) //需要加入 base(name)
+{
+	//base 相当于我要调用父类的构造函数，用于自己的构造。
+}
+```
+
+# 18.多态：重载、重写
+## 多态
+多态是同一个行为具有多个**不同表现形式或形态的能力**，在面向对象编程范式中，多态性往往表现为"一个接口，多个功能"。
+![](./images/1709709538640.png)
+
+>现实中，比如我们按下 F1 键这个动作：
+>- 如果当前在 Flash 界面下弹出的就是 AS 3 的帮助文档；
+>- 如果当前在 Word 下弹出的就是 Word 帮助
+>- 在 Windows 下弹出的就是 Windows 帮助和支持。
+>
+>同一个事件发生在不同的对象上会产生不同的结果。
+
+**主要表现在：**
+1.父类变量指向子类
+2.函数重载
+
+### 1.父类变量指向子类
+```c#
+using System;
+namespace Test()
+{
+	class Person
+	{
+	
+		public virtual void Run() //重写之前得加上 virtual 这个是虚方法的意思
+		{
+		
+		}
+		
+		public void test()
+		{
+		 // 要调用这个，用 Person.test()
+		}
+		//这个就是重载
+		public void test(int a)
+		{
+		 // 要调用这个，用 Person.test(12)
+		}
+		//这个也是重载，而且三个test可以共同存在）
+		public void test(string str)
+		{
+		 // 要调用这个，用 Person.test("abc")
+		}
+		public void test(int a,int b)
+		{
+		 // 要调用这个，用 Person.test(2,3)
+		}
+	
+	}
+	
+	class XiaoWang:Person
+	{
+		pulic override void Run() //override 重写
+		{
+			base.Run(); //先调用一下父类的方法（这个可以不调用）不写这个就是完全 重写，写上这个就是 拓展~
+			Console.WriteLine("我叫小王")
+		}
+	
+	} //Person的子类
+	
+	class XiaoLi:Person
+	{
+	
+		pulic override void Run() //override 重写
+		{
+			base.Run(); //先调用一下父类的函数（这个可以不调用）在你需要父类这个函数的时候可调用
+			Console.WriteLine("我叫小李")
+		}
+	}
+	
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			XiaoWang xw = new XiaoWang();
+			XiaoLi xl = new XiaoLi();
+			
+			Person p = xw; //指向小王
+			p.Run() //这个输出就是：我叫小王
+			p = xl ; //指向小李
+			p.Run() //这个输出就是：我叫小李
+			Console.ReadKey();
+		}
+	
+	}
+
+
+}
+```
+
+虽然用同一个调用（p.Run())，但是输出的不是同一个结果。
+
+# 19.属性
+很多字段为了防止外界修改，所以在一般情况下，字段都会被设置为orivate(私有)，那么外界如果想访问该怎么做呢？
+快捷设置字段的访问方式，只读or只写or可读可写，就可以使用到属性，或称属性访问器。
+```C#
+private string name; //首先要现有一个字段
+public string Name
+{
+	get //get访问器用于读取字段，若属性内没有get访问器，则被认为是不可读的
+	{
+		return name;
+	}
+	set // set访问器用于写入字段，若属性内没有set访问器，则被认为是不可写的
+	{
+		name = value; //value被认为是写入的数值
+	}
+}
+```
+
+例子：
+```c#
+
+namespace Test
+{
+	class Person
+	{
+		// if 设为 public，外界就可以擅自改变了。
+		//比如说血量0-100,结果外界改成了 -100,10000
+		private int hp; //不直接开放
+		
+		public void SetHp(int value)
+		{
+			hp = value < 0 ? 0 : value; //三目运算符
+		}
+		
+		public int GetHp()
+		{
+			return hp;
+		}
+		//以上代码太常用了，C#见此做出了一些优化！
+		//这个方案就是属性。
+		//属性：
+		public int HP
+		{
+			// set 和 get 都是可以选择不写的。
+		 	set 
+		 	{
+		 		hp = value < 0 ? 0 : value;
+		 	}
+			get
+			{
+			 	return hp;
+			}
+		}
+	
+	
+	}
+	class Program
+	{
+	
+		static void Main(string[] args)
+		{
+			Person p = new Person();
+			p.SetHp(-100);
+			int hp = p.GetHp();
+			//调用属性
+			
+			p.HP = -100; //调用set
+			int HP = p.Hp; // 调用get
+		
+		}
+	
+	}
+
+}
+
+```
+
+# 20.静态
+
+**静态成员：**
+静态成员变量是和类相关联的，可以作为类中“共”有的变量（是一个共性的表现)，静态成员不依赖特定对象的存在，访问的时候通过类来操作的。
+**静态成员使用static关键字修饰。**
+
+```c#
+class Person
+{
+ 	//人口数量
+ 	public static long population = 7000000000;
+	// 设置人口数量
+	public static void SetPopulation(long population)
+	{
+		Person.population = population;
+	}
+	
+	//For example:
+	public static string name;
+	public int age;
+	
+	public void run()
+	{
+	
+	}
+	
+	public static void run2()
+	{
+	
+	}
+	
+	public static void test()
+	{
+	 //这个方法取不到age,但他可以取到name.
+	 //这个方法取不到run，但可以取到 run2.
+	}
+}
+```
+
+当你的变量加上了static ,称为了静态变量（常量）那么：
+```c#
+static void Main(string[] args)
+{
+	Person xiaoWang = new Person();
+	Person xiaoLi = new Person();
+	
+	xiaoWang.name //这个是没办法调用的。
+	
+	//当加了static，只能用类名来调用。（这个name属于这个Person 类）
+	//但没加上static，那不能用类名来调用，得用 对象名来调用。
+	Person.name
+
+	//方法（函数）同样情况：
+	Person.test();
+}
+```
+
+**注意：** 
+Main函数本身就加上 static ，所以若写另一个函数，想要可以被main调用的话，也需要加上static.
+
+ > - 静态成员随着类的加载而加载，无论对一个类创建多少个实例，**静态成员都只有一个副本**
+ > - 静态方法**可以被重载**
+ > -  静态成员由**类名通过点语法调用**，**非静态成员是由对象来调用**
+ > -   静态方法**只能访问静态成员，包括静态成员变量和静态方法：实例方法可以访问实例成员变量与实例方法，也可以访问静态成员**
+
+# 21.抽象
