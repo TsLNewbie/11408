@@ -1737,8 +1737,9 @@ func -=test1;
 xiaoming.func +delegate(int a,int b){
 Console.WriteLine("111");
 ```
-```C#
 Lambda:
+```C#
+
 xiaoming.func +=(float c,float d)=>
 {
 Console.VriteLine(lambda表达式")；
