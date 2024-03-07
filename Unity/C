@@ -1630,18 +1630,119 @@ func =  test;
 代码例子：
 ```c#
 class Program
-{
+{	
+	//声明一个委托类型
 	public delegate int MyDelegate(int x,int y);
 	
 	static int add(int a,int b)
 	{
 		return a+b;
 	}
+	
+	static int sub(int a,int b)
+	{
+		return a-b;
+	}
 
 	static void Main(string[] args)
 	{
-	
+	 	//声明一个委托变量
+		MyDelegate myDelegate;
+		//委托保存方法
+		myDelegate = add;
+		myDelegate = new MyDelegate(add);
+		//委托和正常使用方法是相同的。
+		add(3,4);
+		myDelegate(3,4);
+		myDelegate = sub;
+		myDelegate(3,4);  //这个是调用了sub的方法
+		
 		Console.ReadKey();
 	}
 }
 ```
+
+委托具有**灵活性**~
+
+```c#
+namespace Test
+{
+	//中介
+	class Person
+	{
+		//委托类型
+		public delegate void DoSomething();
+		
+		//执行
+		public void Run(DoSomething doSomething)
+		{
+			doSomething();
+		}
+	}
+
+	class Program
+	{	
+		static void eat()
+		{
+			Console.WriteLine("吃饭");
+		}
+		
+		static void play()
+		{
+			Console.WriteLine("玩耍");
+		}
+		
+		
+		
+		static void Main(string[] args)
+		{
+			Person person = new Person();
+			Person.DoSomething doSomething;
+			//把吃饭的操作给了委托
+			person.Run(eat);//这时候委托才有意义。
+			person.Run(play);
+			
+			//另外一种方法
+			doSomething = eat;
+			person.Run(doSomething);
+			doSomething = play; 
+			person.Run(doSomething);
+			
+			//多播方法:
+			doSomething = eat;
+			doSomething += play; //添加方法
+			person.Run(doSomething); //这样两个方法都会执行
+			doSomething -= play; //删除方法
+
+			
+			
+			Console.ReadKey();
+		}
+	}
+//让class 和 program有委托关系了。
+}
+```
+
+## 委托链-多播
+委托链的绑定与解绑定
+Func func +=test1;
+func -=test1;
+
+
+
+## 匿名委托
+
+匿名委托：
+```c#
+xiaoming.func +delegate(int a,int b){
+Console.WriteLine("111");
+```
+```C#
+Lambda:
+xiaoming.func +=(float c,float d)=>
+{
+Console.VriteLine(lambda表达式")；
+```
+
+>委托比较的难掌握：当你到写游戏部分的时候就会比较好的去掌握了。
+
