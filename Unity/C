@@ -1595,7 +1595,11 @@ static void Main(string[] args)
 
 # 26.委托Delegate
 C#中的委托类似于C/C\+\+中的函数指针。
-委托是一种可以存放方法的自定义类型。
+委托是一种可以**存放方法**的自定义类型。
+>比如说 
+>int 类型是存放 整型的
+>float类型是存放 浮点数的
+>bool类型是存放 True & False
 ```c#
 void test()
 {
@@ -1603,8 +1607,41 @@ void test()
 }
 ```
 定义委托类型：
+```C#
+//声明委托的语法：
+delegate <return type> <delegate-name> <parameter list>
+
 public delegate void Func();
+
+//委托可被用于引用任何一个带有一个单一的string参数的方法，并返回一个int类型变量。
+public delegate int MyDelegate(string s);
+
+```
+
 声明该委托变量：
+```c#
 Func func;
+```
 该委托变量保存一个方法
+```c#
 func =  test;
+```
+
+代码例子：
+```c#
+class Program
+{
+	public delegate int MyDelegate(int x,int y);
+	
+	static int add(int a,int b)
+	{
+		return a+b;
+	}
+
+	static void Main(string[] args)
+	{
+	
+		Console.ReadKey();
+	}
+}
+```
