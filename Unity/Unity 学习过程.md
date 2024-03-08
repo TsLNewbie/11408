@@ -131,3 +131,9 @@ Plane：
 
 这个是**材质列表**。
 
+>Unity 拥有资源商店，你可以用这个商店去获取你想要的东西。
+>窗口（Windows)里的资源商店（asset store)
+>网站：https://assetstore.unity.com/zh
+
+# 10.有山有路有悬崖？地形！
+>山，水什么的从资源商店获取。
