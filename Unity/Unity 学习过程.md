@@ -137,3 +137,33 @@ Plane：
 
 # 10.有山有路有悬崖？地形！
 >山，水什么的从资源商店获取。
+
+导入这个！
+![](./images/1709970403944.png)
+
+![](./images/1709970502927.png)
+第一个按钮 添加相邻地形(Create Neighbor Terrains)
+这个可以添加 相同大小 的 地形 在 选中地形的相邻位置（这不就城市天际线买地嘛）
+
+第二个按钮 绘制地质地形(Paint Terrain)
+![](./images/1709971018392.png)
+在绘制中有多个选项。
+- Raise or Lower Terrain，用来画山的。
+	- 左键提高山，Shift + 左键 = 挖坑。
+- Paint Holes,画洞。
+- Paint Texture,绘制纹理.
+- Set Height,设置高度。
+	- 按住Shift 然后对某个山峰左键，可以取山的高度。
+	- Flatten Tile 可以移平山地，变成完全平的平地（高度由你来定）。（单独一个瓦片(区域））![](./images/1709971938605.png)
+		- Flatten All 就是全部移平。
+ - Smooth Height，平滑高度。
+	 - 其强度按照 Blur Direction
+		 - -1 : 磨高不磨低
+		 - +1：磨低不磨高
+-	Stamp Terrain 印章地形
+	-	就只有第一下抬地形，不能拖拽。
+
+最后一个按钮的最后一行可以调整地形分辨率（Mesh Resonlution)(On Terrain Data)
+
+![](./images/1709971580396.png)
+图中，突起的山地是由 Raise or Lower Terrain 制成，而突起的平地是由 Set Height 制成。
