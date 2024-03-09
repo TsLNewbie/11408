@@ -262,3 +262,93 @@ Plane：
 甚至！你在组件那搜寻，如果不存在你想要的组件，那么你可以添加新的脚本（在添加组件的位置中）
 ![](./images/1709977616247.png)
 
+
+而如果想要重命名这个脚本文件名，那么你就点一下，然后隔一段时间再点即可。
+
+## 14.尽职的一生，了解脚本的生命周期。【书中P.059】
+
+什么是生命周期？就是脚本从他创建出来，到销毁的这个过程。
+
+```c#
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+///<summary>
+///
+///</summary>
+public class TEST : MonoBehaviour
+{
+    private void Awake() //最早调用，所以一般可以实现单列模式
+    {
+        Debug.Log("Awake");
+    }
+    //Start is called before the first frame update
+
+    private void OnEnable() //组件激活后调用 一次
+    {
+        Debug.Log("OnEnable");
+    }
+    void Start() //Update之前调用一次，OnEnable之后调用。
+    {
+        Debug.Log("Start"); 
+    }
+
+    //Update is called once per frame
+    void Update() //帧率调用方法，每帧调用一次（不建议输出）
+    { 
+        
+    }
+
+    private void LateUpdate() //Update执行完就执行（跟屁虫）
+    {
+         
+    }
+
+    private void FixedUpdate() //固定频率调用（和帧没关系）
+    {
+        
+    }
+
+    private void OnDisable() //与OnEnable相反，组件非激活调用 一次。
+    {
+        Debug.Log("OnDisable");
+    }
+
+    private void OnDestroy()//当销毁时调用
+    {
+     
+    }
+}
+ 
+```
+以上代码中的**Start()** 和**Update()** 就是生命周期方法其中的两个。
+
+![](./images/1709978286015.png)
+
+```c#
+//我们再 class里写一个awake
+ private void Awake()
+ {
+     Debug.Log("Awake");
+ }
+
+```
+>脚本要在**物体里**，才会被真正的调用。（脚本成为物体组件）
+
+上述代码的效果：
+![](./images/1709978638272.png)
+
+```c#
+//我们再 class里写一个awake
+  private void OnEnable()
+ {
+ 	Debug.Log("OnEnable");
+ }
+```
+代码效果：
+![](./images/1709978761225.png)
+
+关于FixedUpdate的固定时间，在Project Settings 里可以进行修改。
+![](./images/1709979125718.png)
+
+## 15.不能插队！脚本的执行顺序问题。
