@@ -175,3 +175,27 @@ Plane：
 >中间的柱子是 Raise or Lower Terrain + Paint Holes
 >右上角的星星是： Stamp Terrain
 >右下角的山是：Raise or Lower Terrain + Smooth Terrain
+
+# 11.绘制地形，给地形化个妆！
+
+打开 在上一个视频中的 **Paint Texture,绘制纹理**.你就会获得以下界面：
+
+![](./images/1709972843650.png)
+
+其中地形层 Terrain Layers ，去添加一个地形层。
+效果如下：
+
+![](./images/1709972928147.png)
+然而，材质可以有多个，而第二个开始就得由你自己绘制了。效果如下：
+![](./images/1709973020905.png)
+而让我们回到地形的五个按钮。
+
+![](./images/1709973159600.png)
+第三个按钮，绘制树木(Paint Trees)
+
+而树也需要**先被定义。**
+![](./images/1709973214632.png)
+
+树的绘制也可以按照： Brush Size，Tree Density，Tree Height 来调整。
+![](./images/1709973329262.png)
+树大部分保持随机即可，不然太过工业化了（太假）
