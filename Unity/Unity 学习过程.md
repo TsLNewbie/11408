@@ -167,3 +167,11 @@ Plane：
 
 ![](./images/1709971580396.png)
 图中，突起的山地是由 Raise or Lower Terrain 制成，而突起的平地是由 Set Height 制成。
+
+![](./images/1709972506190.png)
+
+>左边的山是用Raise or Lower Terrain 
+>左2的突起平地是 Set Height
+>中间的柱子是 Raise or Lower Terrain + Paint Holes
+>右上角的星星是： Stamp Terrain
+>右下角的山是：Raise or Lower Terrain + Smooth Terrain
