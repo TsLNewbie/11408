@@ -553,3 +553,276 @@ private void Start()
 ```
 
 ## 22.报错啦！ 别急，Debug来帮你
+Debug代码：
+```c#
+//普通输出
+Debug.Log("Test");
+//以警告的方式输出
+Debug.LogWarning("Test2");
+//以错误的方式输出
+Debug.LogError("Test3");
+
+
+//绘制一条线 :(起点，终点，颜色）代码中是从 (0,0,0) 到 (1,1,1)
+//只有开发人员才能看到，并非游戏实际内容。
+Debug.DrawLine(Vector3.zero,Vector3.one,Color.blue);
+
+//绘制一条射线 (起点,方向(射线)，颜色）
+Debug.DrawRay(Vector3.zero, Vector3.up, Color.red);
+```
+
+## 23.动态修改物体属性？游戏物体类的使用。
+
+>前期提要：
+>一个物体包含不同组件之后，就有着不同的形态和功能。
+>每个游戏物体都对应C#中的类：GameObject
+
+其中 public GameObject Cube 代码后可以获得这个东西：
+![](./images/1710142461119.png)
+```c#
+public class EmptyTest : MonoBehaviour
+{
+    //写了这个之后在Unity里的组件就会有Cube选项。
+    //通过这样的方法就可以在一个脚本里操控另一个物体了。
+    public GameObject Cube;
+
+    //获取预设体 
+    //与Cube 同理。
+    public GameObject Prefab;
+
+
+    private void Start()
+    {
+        //拿到当前脚本所挂载的游戏物体
+        //其实这一句没必要写，只是展示一下。
+        GameObject go = this.gameObject;
+        //输出 Empty
+        Debug.Log(go.name);
+        //gameObject 就是这个脚本附属的一个物体。
+        //那不写GameObject go 的话就可以这样写：
+        
+
+        //名称
+        Debug.Log(gameObject.name);
+        //Tag（标签）
+        Debug.Log(gameObject.tag);
+        //Layer (图层输出的是索引）
+        Debug.Log(gameObject.layer);
+
+        //打印立方体(Cube)的名称
+        Debug.Log(Cube.name);
+        
+        //是否激活
+        //由于父物体激活状态会影响到这个物体的激活状态，因此就有两种代码表示。
+        //当前真正的激活状态
+        Debug.Log(Cube.activeInHierarchy);
+        //当前自身的激活状态
+        Debug.Log(Cube.activeSelf);
+
+        //获取Transform 组件
+        Transform trans = this.transform; //真正去用可以省略这一句
+
+        Debug.Log(transform.position);
+
+        //获取其他组件
+        //<泛型>：去写你要的组件类型即可。
+        BoxCollider bc = GetComponent<BoxCollider>();
+
+
+        //获取当前物体的子物体身上的某个组件
+        GetComponentInChildren<CapsuleCollider>(bc);
+
+        //获取当前物体的父物体身上的某个组件
+        GetComponentInParent<BoxCollider>();
+
+        //添加一个组件 <组件>
+        gameObject.AddComponent<AudioSource>();
+
+        //给Cube添加
+        Cube.AddComponent<AudioSource>();
+
+        //通过游戏物体的名称来获取游戏物体
+        //代码的意思是：找一个物体，物体名叫 Test
+        GameObject test = GameObject.Find("Test");
+
+        //通过游戏标签来获取物体
+        test = GameObject.FindWithTag("Enemy");
+
+        //调整激活状态
+        Cube.SetActive(false);
+
+        //通过预设体来实例化一个游戏物体
+        //实体化了一个克隆物体。
+        //代码意思：实体化一个物体，放到(0,0,0)的位置上，不旋转。
+        Instantiate(Prefab,Vector3.zero,Quaternion.identity); 
+
+        GameObject go2 = Instantiate(Prefab, Vector3.zero, Quaternion.identity);
+
+        //销毁
+        Destroy(go2);
+
+    }
+}
+```
+
+## 24.游戏时间的使用
+
+```c#
+public class TimeTest : MonoBehaviour
+{
+
+    float timer = 0;
+
+    private void Start()
+    {
+        //游戏开始到现在所花的时间
+        Debug.Log(Time.time);
+
+        //时间缩放值
+        Debug.Log(Time.timeScale);
+
+        //固定时间间隔
+        Debug.Log(Time.fixedDeltaTime);
+
+
+
+    }
+    //假设 电脑 60帧一秒  1/60 1/120
+    private void Update() //以帧调用
+    {
+        //这个相当于一个计时器(每一种帧的运行时间都加进去了）
+        timer = timer + Time.deltaTime;
+        //上一帧到这一帧所用的游戏时间 （这个用的非常多）
+        Debug.Log(Time.deltaTime);
+
+        //例子：如果大于3秒
+        if (timer > 3)
+        {
+            Debug.Log("3秒过去了");
+            timer = 0;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        //这个是固定时间调用
+    }
+}
+
+```
+
+## 25.路径权限要理清，Application很重要。
+
+>Unity游戏中的目录结构不一样，所以需要知道文件的位置。
+
+```c#
+//游戏数据文件夹路径（返回字符串（路径））
+//路径引导到Assets文件夹里。
+//（只读，加密压缩）
+Debug.Log(Application.dataPath);
+//如果想读取Assets文件夹里的一个文件，就可以这样做：
+Debug.Log(Application.dataPath + "/文件名");
+
+//持久化文件夹路径
+//路径引导到一个空间（保存一些游戏数据的）
+Debug.Log(Application.persistentDataPath);
+
+//StreamingAssets文件夹路径(只读，配置文件）
+//打包后，所有人都可以看的到的，就是配置文件。
+Debug.Log(Application.streamingAssetsPath);
+
+//临时文件夹
+//另一个系统路径
+Debug.Log(Application.temporaryCachePath);
+
+//控制是否在后台运行（就是窗口化或者离开后游戏是否继续运行）
+Debug.Log(Application.runInBackground);
+
+//打开URL
+Application.OpenURL("https://cn.bing.com/");
+
+//退出游戏
+Application.Quit();
+```
+
+Run In Background，后台运行控制。
+![](./images/1710147333980.png)
+
+## 26.需要切换场景？场景类你一定要了解。
+![](./images/1710147704964.png)
+
+创建一个 "MyScene" 的场景文件。
+![](./images/1710147987657.png)
+
+我们希望能在这个SampleScene通过代码自动加载到MyScene的场景来，怎么做呢？
+
+在左上角 File 里 点 Build Settings。
+
+图中，最上方的 Scenes In Build便是。
+如果你这个场景是需要用的，那么把他拖拽到这个位置就对了。
+![](./images/1710148134637.png)
+
+![](./images/1710148215487.png)
+
+接下来就可以做场景跳转了。
+
+```c#
+//需要导入这名称空间
+using UnityEngine.SceneManagement; 
+
+...
+    //两个类：场景类，场景管理类。
+
+    //加载/跳转场景
+    //这个是通过索引
+    SceneManager.LoadScene(1);
+
+    //通过名称
+    SceneManager.LoadScene("MyScene");
+
+
+    //场景类：
+    //获取当前场景
+    Scene scene = SceneManager.GetActiveScene();
+    //输出场景名称（用于验证）
+    Debug.Log(scene.name);
+
+    //场景是否已经加载 bool值
+    Debug.Log(scene.isLoaded);
+
+    //场景路径 字符串
+    Debug.Log(scene.path);
+
+    //场景索引 数值
+    Debug.Log(scene.buildIndex);
+
+    //获取所有的根游戏物体（数组）
+    GameObject[] gos =scene.GetRootGameObjects();
+
+    //场景管理类：
+    //总共场景数量
+    Debug.Log(SceneManager.sceneCount);
+
+    //创建新场景
+    SceneManager.CreateScene("newScene");
+
+    Scene scene2 = SceneManager.CreateScene("newScene");
+
+    //卸载场景：(异步销毁）
+    SceneManager.UnloadSceneAsync("newScene");
+
+    //加载场景：（场景，加载方法（枚举））
+    SceneManager.LoadScene("MyScene",LoadSceneMode.Single);
+
+    //其中有：Single(直接替换) Addictive（添加）
+
+    //加载场景会有进度条，那就是在加载中，如果场景太大，那么加载就很久了。
+    //那就需要另一个方法：异步加载
+    SceneManager.LoadSceneAsync("MyScene");
+}
+
+
+
+```
+
+## 27.Async异步加载场景并获取进度。
