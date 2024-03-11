@@ -884,3 +884,146 @@ public class AsyncTest : MonoBehaviour
 }
 
 ```
+
+## 28.位置旋转缩放来聚齐，了解Transform
+>游戏物体中的父子关系并非由物体自己标识，而是Transform组件。
+
+![](./images/1710167218550.png)
+
+```c#
+public class TransformTest : MonoBehaviour
+{
+    private void Start()
+    {
+        
+        //获取位置 (Vector3)
+        //代表世界位置
+        Debug.Log(transform.position);
+        //面板位置/相对父物体位置
+        Debug.Log(transform.localPosition);
+
+        //获取旋转 (四元数）
+        //相对世界位置
+        Debug.Log(transform.rotation);
+        //面板位置/相对父物体位置
+        Debug.Log(transform.localRotation);
+
+        //获取欧拉角(Vector3)
+        //相对世界位置
+        Debug.Log(transform.eulerAngles);
+        //面板位置/相对父物体位置
+        Debug.Log(transform.localEulerAngles);
+
+        //获取缩放
+        //只有相对于父物体的缩放
+        Debug.Log(transform.localScale);
+
+        //Z轴一般是前方，X轴是右手。
+        //旋转Y轴，方向就会发生变化。
+
+        //向量
+        Debug.Log(transform.forward); //前方 Z轴
+        Debug.Log(transform.right); //右方 X轴
+        Debug.Log(transform.up); //上方 Y轴
+
+        //父子关系
+        //获取父物体
+        GameObject ob = transform.parent.gameObject;
+        //子物体个数
+        Debug.Log(transform.childCount);
+
+        //解除与子物体的父子关系
+        transform.DetachChildren();
+
+        //获取子物体
+        //通过名字
+        Transform trans = transform.Find("Child");
+        //索引，获取第几个子物体
+        trans = transform.GetChild(0);
+
+        //判断一个物体是不是另外一个物体的子物体
+        //trans的物体是不是transform的一个子物体
+        //在游戏就是表现为 Child物体是不是为 Sphere的子物体。
+        bool res = trans.IsChildOf(transform);
+
+        //设置为父物体
+        //trans的父物体设为 transform（本物体)
+        trans.SetParent(transform);
+    }
+
+    private void Update()
+    {
+        //时时刻刻都看向（0，0，0）点
+        //之后无论如何都会看向那个点
+        transform.LookAt(Vector3.zero);
+
+        //旋转 （轴，速度）
+        //每一帧Y轴旋转一。
+        //爱地魔力转圈圈
+        transform.Rotate(Vector3.up, 1);
+
+        //绕某个物体旋转 (物体坐标，轴，速度）
+        transform.RotateAround(Vector3.zero, Vector3.up, 5);
+
+        //移动
+        //每一帧移动0.1
+        //燕子你不在我怎么活啊！
+        transform.Translate(Vector3.forward * 0.1f);
+    }
+}
+
+```
+
+## 29.键鼠操作\[P.069\]
+
+```c#
+    //键鼠是每一帧都需要进行判断，所以要放到Update中。
+    private void Update()
+    {
+        //鼠标点击 0左键 1右键 2中键
+        //按下鼠标 
+        if (Input.GetMouseButtonDown(0))
+        {
+            //只有按下的瞬间才会触发
+            Debug.Log("Click Left button");
+        }
+
+        //持续按下鼠标 （按住）
+        if(Input.GetMouseButton(0))
+        {
+            Debug.Log("持续按下鼠标左键");
+        }
+
+        //抬起鼠标
+        if(Input.GetMouseButtonUp(0))
+        {
+            Debug.Log("抬起了鼠标左键");
+        }
+
+        //按下键盘按键
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log("按下了A");
+        }
+
+        //持续按下（按住）
+        if (Input.GetKey(KeyCode.A))
+        {
+            Debug.Log("按住了A");
+        }
+
+
+        //抬起按键
+        if (Input.GetKeyDown("a")) //这种字符串也是可以的
+        {
+            Debug.Log("松开了A");
+        }
+    }
+}
+
+```
+
+>书中有更多操作，可以看看。
+
+
+## 30.操作需要兼容与过度？虚拟轴的运用。
