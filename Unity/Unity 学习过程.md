@@ -826,3 +826,61 @@ using UnityEngine.SceneManagement;
 ```
 
 ## 27.Async异步加载场景并获取进度。
+
+>进行异步加载然后时时刻刻展示进度。
+
+异步和同步：[从小白到高手，你需要理解同步与异步](https://zhuanlan.zhihu.com/p/270428703)
+
+同步是这样的：
+这个例子中老板交给你任务后就一直**等待**什么都不做**直到你写完**，这个场景就是所谓的同步。
+![](./images/1710165774890.png)
+
+
+而这是异步：
+这个例子老板交代完任务就去忙其它事情，你完成任务后简单的告诉老板任务完成，这就是所谓的异步。
+![](./images/1710165798843.png)
+
+更多的异步：
+![](./images/1710165835823.png)
+
+>异步的加载就是通过 **多线程** **协程**进行的。
+
+[为什么return 前面要加yield?](https://blog.csdn.net/qq_33060405/article/details/78484825)
+
+```C#
+public class AsyncTest : MonoBehaviour
+{
+    AsyncOperation operation;
+    private void Start()
+    {
+        //开始协程
+        StartCoroutine(loadScene());
+    }
+
+    //协程方法 ： 用来异步加载场景
+    IEnumerator loadScene()
+    {
+        operation = SceneManager.LoadSceneAsync(1);
+        //加载完场景不要自动跳转
+        operation.allowSceneActivation = false;
+        yield return operation;
+    }
+
+    float timer = 0;
+
+    private void Update()
+    {
+        //输出加载进度 0 - 0.9
+        //等学会了UI就可以用进度条了。
+        Debug.Log(operation.progress);
+        timer += Time.deltaTime;
+        //如果到达5秒，再跳转
+        if (timer > 5)
+        {
+            operation.allowSceneActivation = true;
+        }
+        //学到按键操作可以更好一些。
+    }
+}
+
+```
