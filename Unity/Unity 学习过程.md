@@ -1027,3 +1027,332 @@ public class TransformTest : MonoBehaviour
 
 
 ## 30.操作需要兼容与过度？虚拟轴的运用。
+
+>游戏机的手柄左侧的摇杆就是 轴。
+
+![](./images/1710224873019.png)
+>为什么要搞虚拟轴，因为可以让不同设备都可以兼容游戏的操作。
+
+虚拟轴在：
+![](./images/1710225157928.png)
+
+最常用的是：水平Horizontal 和 垂直Vertical
+
+![](./images/1710225223078.png)
+left = a ，right = b
+
+![](./images/1710225377670.png)
+当只存在一个按键的时候，就构不成 **虚拟轴**（必须得有两个），所以这就反而是 **虚拟按键**。
+
+输入管理器里：只有**水平**和**垂直**是 轴，其他的都是按键。
+
+```c#
+private void Update()
+{
+    //获取水平轴
+    //获取哪个轴，就填写轴的名称
+    float horizontal = Input.GetAxis("Horizontal");
+    float vertical = Input.GetAxis("Vertical");
+    Debug.Log(horizontal + "  " + vertical);
+
+    //虚拟按键
+    //也有 Down，UP和普通之分
+    if (Input.GetButtonDown("Jump"))
+    {
+        Debug.Log("空格");
+    }
+}
+```
+
+## 31.触屏操作
+
+
+```c#
+private void Start()
+{
+    //多点触摸，启动！
+    Input.multiTouchEnabled = true;
+}
+
+private void Update()
+{
+    //判断单点触摸
+    if(Input.touchCount == 1)
+    {
+        //触摸对象
+        Touch touch = Input.touches[0];
+        //触摸位置
+        Debug.Log(touch.position);
+        //触摸阶段
+        switch (touch.phase)
+        {
+            case TouchPhase.Began: //开始阶段
+                break;
+            case TouchPhase.Moved: //移动
+                break;
+            case TouchPhase.Stationary: //静止
+                break;
+            case TouchPhase.Ended: //结束
+                break;
+            case TouchPhase.Canceled: //被打断
+                break;
+
+        }
+
+    }
+
+    //判断多点触摸
+    if(Input.touchCount == 2)
+    {
+        Touch touch = Input.touches[0];
+        Touch touch1 = Input.touches[1];
+    }
+
+}
+```
+
+# 第四章，游戏场景!【0.79】
+## 32.RGB！巧用灯光与烘培
+
+![](./images/1710227866183.png)
+按右键就可以创建以上的灯光类型。
+
+![](./images/1710228025045.png)
+
+灯光Type(类型)有四种：
+- Directional(定向)
+	- 灯光是无穷远的地方照射过来的（太阳的那种感觉）
+	- 灯光不受物体XYZ轴（位置）影响，受旋转影响。
+- Spot(聚光)
+	- 相当于一个手电筒。
+	- 这个灯光就受位置和旋转影响了。
+	- 可以控制范围。
+- Point(点光源)
+	- 一个点360度发光。
+	- 可以控制范围。
+- Area(baked only)(区域)(仅烘培)
+	- 影楼照相的时候有个特别大的灯光，就和这个类似了。
+	- 以一个面发出灯光。
+	- 灯光在平时是看不到的，仅烘焙。
+
+![影楼灯光](./images/1710228745684.png)
+
+什么是仅烘焙？
+在灯光组件里有个模式选项：![](./images/1710228844578.png)
+模式有三：
+- RealTime实时
+	- 游戏场景中，实时通过计算，生成灯光。
+	- 比如说赛车的头灯。
+- Mixed混合(实时+烘焙)
+- Baked已烘焙
+	- 先调好这个灯光，这个灯光属于永远不会变的，设定好的灯光。
+
+
+那怎么去使用 Area 的定光？
+找其中一个物体，右上角的下三角。选择 Contribute GI
+![](./images/1710229193410.png)
+点击左上角的Window -> Rendering(渲染) -> Light(关照)
+
+![](./images/1710229320834.png)
+点击Generate Lighting(生成光照)（烘焙）
+
+之后就烘焙完成了~
+![](./images/1710229520841.png)
+
+## 33.做个好导演，选择合适的摄像机！
+ 
+ 两种摄像机：
+ 
+![](./images/1710229785045.png)
+
+![](./images/1710229857684.png)
+
+
+这是相机的组件：
+![](./images/1710229969103.png)
+在Projection那可以选择是透视还是正交。
+
+Clear Flags 的意思是如果是相机没有拍摄到东西的地方，就会用以下选项中的内容进行填充。（类似于背景）
+在Clear Flags(清除标志)中有多个选项：
+- Skybox(天空盒)
+	- 其实就是MC的那种天空，其实是一个盒子的材质。
+- Soild Color(纯色)
+	- 就是纯色
+- Depth Only(仅深度)
+	- 拍摄不到就不拍摄了。
+	- 这个用于叠加的
+- Don't Clear(不清除)
+	- 黑色
+
+
+![天空盒](./images/1710230261355.png)
+
+Depth Only(仅深度) 需要进一步探讨一下：
+
+假设我们有两个相机，一个主一个副，两个相机对应位置不同，拍摄的物体也不同。
+我默认希望能展示 主相机，但是游戏先展示了副相机，那这种时候就需要深度来进行调节。
+![](./images/1710230705889.png)
+深度越大，就会覆盖深度低的相机。
+
+当深度相同时，加上Depth Only就会有不一样的事情发生。
+比如说：我们把主相机的Clear Flags 调整成 Depth Only，且把深度Depth 调为 和 副相机一样的 深度。
+
+接下来就会发生以下事情。
+
+![](./images/1710230824985.png)
+中间巨大的物体其实是主相机所拍下来的，而右边小的那个才是副相机的视角。
+
+用我的理解就是：两个相机融合起来，或者是 背景变为 **另一个相机的背景。**
+
+相机锥形视野其实有两个面：
+一个是从这个相机发射出来的面（近面）(Near)
+最大的面就是（远面）(Far)
+在这两面之间的物体才能显示。
+![](./images/1710231260260.png)
+
+Viewport Rect(矩形)
+![](./images/1710231329117.png)
+这个就代表了相机能拍摄到的内容.
+
+具体效果：
+Clear Flags = Solid Color(纯色)
+Viewpot Rect = X =0 Y=0 W 0.6 H =1
+
+![](./images/1710231541992.png)
+
+>这不就是双人成行了嘛!
+
+Camera 组件里还有一些内容：
+Target Texture(目标纹理)：你相机拍摄到的内容
+
+Target Display(目标显示)：Display视窗。
+
+
+可以去创建一个渲染器纹理（Render Texture) 文件。
+把他拖到相机的Target Texture(目标纹理)上，拍摄到的内容就会时时刻刻的传到这个纹理文件中了。
+
+
+## 34.让游戏的灵魂升华，添加声音吧。
+一般会分为两类：
+音乐(bgm)，音效(se)
+
+在相机中有一个Audio Listener 组件，有了这个组件才能听到声音。
+
+要让物体播放声音，就需要物体有一个 Audio Source的组件。
+
+![](./images/1710232305233.png)
+
+第一个是AudioClip，每一个音频放到Unity中都是 AudioClip形式（音频剪辑）
+
+最后一个有个 3D Sound Settings 这个是一个球体，在这个球体可以发出声音~（**这个会用的上）**
+
+其中的代码：
+```c#
+//AudioClip (你要播放的音频片段）
+//写上这个，在Unity上组件中就会展示
+public AudioClip music;
+public AudioClip se;
+
+//播放器组件
+private AudioSource player;
+
+private void Start()
+{
+    player = GetComponent<AudioSource>();
+    //设定播放的音频片段
+    player.clip = music;
+
+    //循环
+    player.loop = true;
+
+    //音量
+    player.volume = 0.5f;
+
+    //播放
+    player.Play();
+}
+
+private void Update()
+{
+    //按空格去切换声音的播放和暂停
+    if (Input.GetKeyDown(KeyCode.Space))
+    {
+        //如果当前正在播放声音 （里面这个是只读类型的）
+        if (player.isPlaying)
+        {
+            //暂停 
+            player.Pause();
+            //停止（结束）
+            player.Stop();
+        }else
+        {
+            //继续
+            player.UnPause();
+            //开始播放 （从头）
+            player.Play();
+        }
+    
+    }
+
+    //按鼠标左键播放声音
+    if (Input.GetMouseButtonDown(0))
+    {
+        player.PlayOneShot(se);
+    }
+}
+```
+
+## 35.视频播放(MP4文件)
+
+>我创建一个平面，然后希望这个平面去播放视频（MP4），接下来就是流程。
+
+在物体上加一个组件 Video Player
+
+![](./images/1710233936802.png)
+>导入到Unity里的视频文件默认为 Video Clip
+
+在Render Mode（渲染模式）里选择 Render Texture（渲染器纹理）
+
+然后把创建出来的新 渲染器纹理拖拽到这个位置上。
+
+在这个时候，这个Video Clip播放的内容，就都会显示在这个**渲染器纹理**中。
+
+只要把这个纹理引用在物体上，就可以得出这个效果。（卧槽，P5）
+![](./images/1710234139968.png)
+
+你还可以把这个视频创建在一个UI上。
+在UI项中创建一个原始图像(Raw Image)
+
+在原始图像本身就有个纹理（Texture)：![](./images/1710234254595.png)
+
+直接把 渲染器纹理 **拖拽到** 这个Texture中，即可。
+
+那如何去通过脚本进行控制？
+```c#
+
+using UnityEngine.Video; //Video需要用这个名称空间
+
+
+private VideoPlayer player; //声明一个Video类
+
+private void Start()
+{
+    player = GetComponent<VideoPlayer>();
+}
+
+
+
+private void Update()
+{
+    if(Input.GetMouseButtonDown(0))//剩下基本和Audio差不多。
+    {
+        if (player.isPlaying)
+        {
+            //...
+        }
+    }
+}
+```
+
+2024/3/12
+## 36.让角色动起来！角色控制器
