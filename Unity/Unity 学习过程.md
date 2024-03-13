@@ -1356,3 +1356,143 @@ private void Update()
 
 2024/3/12
 ## 36.让角色动起来！角色控制器
+
+这时候我们就需要一个新的组件了。
+![](./images/1710316180408.png)
+
+附上代码：
+```c#
+private CharacterController player;
+private void Start()
+{
+    player = GetComponent<CharacterController>();
+}
+
+private void Update()
+{
+    //虚拟轴的时候提到过
+    //水平轴 
+    float horizontal = Input.GetAxis("Horizontal");
+
+    //垂直轴
+    float vertical = Input.GetAxis("Vertical");
+
+    //创建成一个方向向量 (X,Y,Z)
+    Vector3 dir = new Vector3(horizontal,0,vertical);
+    //Debug.DrawRay(transform.position, dir,Color.red);
+
+    //朝向该方向移动
+
+    //不受重力影响
+    player.SimpleMove(dir * 2);
+}
+```
+
+## 37.物理系统！给物体添加重力
+
+在之前提到过，Unity有一个组件：Rigidbody
+![](./images/1710317210777.png)
+
+加上这个就受到重力影响了。
+-	Mass 质量
+	-	物体质量
+-	Drag 阻力
+	-	下落所遇到的空气阻力
+-	Angular Drag 角阻力
+	-	旋转时候影响的阻力
+- Use Gravity 使用重力
+	- 受/不受重力影响
+	- 并非不受物理影响。
+- Is Kinematic  是否开启运动学
+	- 开了之后就真正不受物理系统影响了。
+- Interpolate 插值
+	- 默认是无插值
+	- 在运动过程中需要插值吗的意思。
+- Collision Detection 碰撞检测
+	-  默认：离散的(非连续检测)
+	-  如果有高速物体产生碰撞，那非连续就很糟糕。（子弹效应）
+	-  高速物体的碰撞检测： 连续动态/持续 (消耗性能)
+		-  举个例子：CF的卡箱子
+	- Continuous Speculative 
+		- 处于非连续和连续之间的一个状态。
+- Constraints 冻结/限制
+	-  Freeze Position / Freeze Rotation 就是冻结某一个方向的移动。
+
+
+## 38.检测碰撞！ 产生与监听。
+
+创建一个地面，地面本身就存在一个碰撞组件：
+![](./images/1710318200214.png)
+同理，其他物体也有：
+![](./images/1710318234852.png)
+
+![](./images/1710318259936.png)
+
+其中，绿色线框就代表着碰撞器的检测。（半径默认0.5)
+
+而当你把绿色线框的范围加大时，实现碰撞的就不是物体本身，而是线框所展示出来的范围。
+
+![](./images/1710318412089.png)
+
+>两个碰撞物体，至少要有一个物体是有 Rigidbody的组件。
+
+只要产生碰撞，两个物体的任意一个都可以检测碰撞~
+
+我们假设我们用 一团火 作为碰撞实验。
+
+这个物体需要有这个：
+![](./images/1710319034541.png)
+
+附上脚本代码：
+```c#
+//创建一个爆炸预设体
+public GameObject Prefab;
+
+
+//监听发生碰撞
+private void OnCollisionEnter(Collision collision)
+{
+    //创建一个爆炸物体
+    //(预设体，位置，旋转）
+    Instantiate(Prefab, transform.position, Quaternion.identity);
+    //销毁自身
+    Destroy(gameObject);
+}
+
+//持续碰撞中
+private void OnCollisionStay(Collision collision)
+{
+    
+}
+
+//结束碰撞
+private void OnCollisionExit(Collision collision)
+{
+    
+}
+
+```
+
+预设体是别的物体。这个物体是展示爆炸效果.
+但如果只是这样就会出一个BUG：这个爆炸就会反复展示：
+
+那为了解决这个爆炸预设体，所以我们需要再写一个脚本，给到这个预设体上。
+
+附上脚本：
+```c#
+public class ExplosionTest : MonoBehaviour
+{
+    float timer = 0;
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer > 1) //一秒后自动销毁
+        {
+            Destroy(gameObject);
+        }
+    }
+}
+```
+
+>由于这个是特效，其实可以考虑运用检测：粒子动画结束。
