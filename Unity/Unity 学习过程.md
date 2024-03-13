@@ -1457,6 +1457,8 @@ private void OnCollisionEnter(Collision collision)
     Instantiate(Prefab, transform.position, Quaternion.identity);
     //销毁自身
     Destroy(gameObject);
+	//获取碰撞到的物体
+	Debug.Log(collision.gameObject.name);
 }
 
 //持续碰撞中
@@ -1496,3 +1498,146 @@ public class ExplosionTest : MonoBehaviour
 ```
 
 >由于这个是特效，其实可以考虑运用检测：粒子动画结束。
+
+>为什么要分开去写代码呢，这样就可以把分工明确了。不用把一个东西放到一个地方。
+
+## 39.踩到机关触发陷阱！触发与碰撞区别
+
+我们首先给这个物体提供PlayerControl的脚本，让这个物体先可以动。
+
+附上PlayerControl 脚本
+```c#
+public class PlayerControl : MonoBehaviour
+{
+    private CharacterController player;
+    private void Start()
+    {
+        player = GetComponent<CharacterController>();
+    }
+
+    private void Update()
+    {
+        //虚拟轴的时候提到过
+        //水平轴 
+        float horizontal = Input.GetAxis("Horizontal");
+
+        //垂直轴
+        float vertical = Input.GetAxis("Vertical");
+
+        //创建成一个方向向量 (X,Y,Z)
+        Vector3 dir = new Vector3(horizontal,0,vertical);
+        //Debug.DrawRay(transform.position, dir,Color.red);
+
+        //朝向该方向移动
+
+        //不受重力影响
+        // * Time.deltaTime 就可以做到每秒移动 dir * 2 了；
+        player.SimpleMove(dir * 2 * Time.deltaTime);
+
+        //这个也可以~
+        //transform.Translate(dir *2);
+
+    }
+}
+```
+
+>Q:如何让相机保持一个和你Scene界面一样的角度呢？
+A:在左上角：GameObject -> Align with View 即可
+
+然后给"Player"物体 附上 rigidbody 组件。(产生碰撞的必要条件)
+
+>产生碰撞的必要条件：两个物体都有碰撞器，两个至少有一个有 rigidbody
+
+![](./images/1710321169543.png)
+现在我们模拟一个场景：玩家是蓝色，而墙壁是红色。接下来我需要放置一个"压力板"（检测判断），这个执行后会把这个墙壁弄消失。
+
+这些碰撞和上节讲过的碰撞差不多。但是最重要的是：
+你需要把其中一个物体的 **Is Trigger(触发器)给调整为 True;**
+![](./images/1710321316627.png)
+（必须有一个碰撞器组件，他的Is Trigger是启用的）
+
+当Is Trigger 启用了，这个物体就"半透明化"，物体是可以穿过他的。
+
+![](./images/1710321440885.png)
+
+所以往往我们会用**看不见的**触发器。
+只需把这个Mesh Renderer（渲染器）点掉即可。
+![](./images/1710321557712.png)
+当然也可以搞个空物体，但是需要碰撞检测。
+
+接下来，写个脚本，挂载到触发器物体即可：
+```c#
+public class CubeControl : MonoBehaviour
+
+{
+    //需要拿到碰撞的信息类
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
+
+    //Trigger触发OnTriggerEnter(进入触发的碰撞器）
+    private void OnTriggerEnter(Collider other)
+    {
+        GameObject Wall = GameObject.Find("Wall");
+        if (Wall != null)
+        {
+            Wall.SetActive(false);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
+    }
+}
+```
+
+![](./images/1710321961862.png)
+这样，玩家只要触碰到中间红色的方块，就可以把墙给去掉了。
+
+>触发看似简单，但触发器非常重要，在游戏里触发是是非常常用的。
+
+## 40.铰链，弹簧，特殊的物理关节
+
+>门和墙壁之间的关系,就是其中一种物理关节。
+
+### 铰链关节组件
+
+![](./images/1710322455775.png)
+加上这个组件，门上就会有一个小小的箭头。
+![](./images/1710322481790.png)
+而这个轴就是铰链，用这个轴当作铰链然后把门给固定在这个位置了。
+
+但这样不是门的效果，我们需要做出门的效果，就得把这个铰链轴放到侧面，那怎么做：
+![](./images/1710322739850.png)
+把上述这两个变量进行调整：
+![](./images/1710322839132.png)
+就可以获得以下的效果：
+
+![](./images/1710322814512.png)
+你推一下，他就开始动了。
+
+![](./images/1710322900945.png)
+
+接下来这样左的话就可以让他自动门了。
+![](./images/1710322992645.png)
+### 弹簧组件
+![](./images/1710323100059.png)
+我们假设这有两个物体，我想上下物体通过弹簧连接：
+这时候就需要Spring Joint（弹簧联合）组件
+![](./images/1710323176368.png)
+这个组件放到上面的那个物体里。然后在Connected Body里选择下面的物体。（这个选择必须是包含Rigidbody的）
+
+这样就可以了。
+![](./images/1710323333318.png)
+
+最后还有一个 固定组件
+![](./images/1710323406398.png)
+把Fixed Joint 放到 上面的物体，并连接下面的物体，这样在物理上这两个物体就**连接**起来了。
+接下来下面物体怎么移动都没办法移动，但上面物体移动会影响到下面物体的移动。
