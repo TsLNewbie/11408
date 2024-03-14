@@ -1658,3 +1658,13 @@ public class CubeControl : MonoBehaviour
 ![](./images/1710400887087.png)
 
 然后拖拽到 平台的 Mesh Collider 组件里的 Material即可。
+
+- Dynamic Friction 动态摩擦力
+	- 动态摩擦力，在动的时候的摩擦力。
+	- 比如说 0.6,我大于0.6我就动。
+- Static Friction 静态摩擦力
+	- 静态的摩擦力，就是不动的情况。 
+	- 比如说 0.6,我低于0.6我就不动。
+- Bounciness 弹力
+- Friction Combine 摩擦组合
+- Bounce Combine 反弹合并
