@@ -1654,3 +1654,7 @@ public class CubeControl : MonoBehaviour
 在蓝色地板里 Mesh Collider 组件，其中Material 是none的。
 
 现在我们想要一个Physical Material（物理材质），可以影响 **"摩擦力"** 的
+此时，我们需要创建一个 物理材质 ，并非 材质。
+![](./images/1710400887087.png)
+
+然后拖拽到 平台的 Mesh Collider 组件里的 Material即可。
