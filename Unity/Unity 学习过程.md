@@ -1661,10 +1661,96 @@ public class CubeControl : MonoBehaviour
 
 - Dynamic Friction 动态摩擦力
 	- 动态摩擦力，在动的时候的摩擦力。
-	- 比如说 0.6,我大于0.6我就动。
 - Static Friction 静态摩擦力
 	- 静态的摩擦力，就是不动的情况。 
 	- 比如说 0.6,我低于0.6我就不动。
 - Bounciness 弹力
 - Friction Combine 摩擦组合
 - Bounce Combine 反弹合并
+
+
+
+## 42.游戏中的红外线，射线检测
+
+>举个例：玩英雄联盟的是时候，你鼠标按右键，角色就会移动到那个位置。
+
+
+我们从摄像机位置发出一个射线，射线打向你点击的位置。
+
+从摄像机 射 一个射线到 三维世界里， 通过射线，获取点击的位置。
+
+```c#
+public class RayTest : MonoBehaviour
+{
+    private void Start()
+    {
+        //方式一
+        Ray ray = new Ray(Vector3.zero, Vector3.up);
+        
+    }
+
+    private void Update()
+    {
+        //方式二
+        if (Input.GetMouseButtonDown(0))
+        {
+            //常用的检测
+            //按下鼠标左键发射射线
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            //声明一个碰撞信息类
+            RaycastHit hit;
+            //碰撞检测
+            bool res = Physics.Raycast(ray, out hit);
+            //如果碰撞到的情况下：hit就有内容了
+            if (res == true)
+            {
+                Debug.Log(hit.point);
+                transform.position = hit.point;
+            }
+            //多检测
+            RaycastHit[] hits = Physics.RaycastAll(ray,100, 1<< 10);
+
+        }
+
+        
+    }
+}
+```
+
+## 43.粒子系统
+> 创建->Effect效果0->Particle System粒子系统
+
+在创建完粒子系统后，你就可以获得这个界面：
+![](./images/1710403289552.png)
+这个是粒子系统的控制器。
+
+
+
+粒子系统组件：
+![](./images/1710403256772.png)
+- Duration 持续时间
+- Looping 循环
+- Prewarm 预热
+	- 没点这个就会一点一点的出来（粒子效果)
+	- start Delay 启动延迟
+		- 多长时间后才开始启动
+-  Start Lifetime 起始生命周期
+	-  一个粒子的生命周期
+- Start Speed 起始速度
+	-  就是速度
+-  3D Start Size
+	-  就3D形状
+-  Start Size
+-  3D start Rotation
+-  Start Rotation
+- Flip Rotation 翻转旋转  
+	- 粒子差异性明显一点
+- Start Color
+- Gravity Modifier 重力修改器
+- Simulation Space 模拟空间
+	-  粒子按照父物体来移动
+- Simulation Speed 模拟速度  
+
+
+![](./images/1710403815568.png)
