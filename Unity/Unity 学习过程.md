@@ -1649,3 +1649,8 @@ public class CubeControl : MonoBehaviour
 这个红色的箱子因 **“摩擦力”** 是不会掉下去的。
 除非蓝色的地板倾斜度很高。
 
+如何去调整呢？:
+![](./images/1710400735980.png)
+在蓝色地板里 Mesh Collider 组件，其中Material 是none的。
+
+现在我们想要一个Physical Material（物理材质），可以影响 **"摩擦力"** 的
