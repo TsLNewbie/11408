@@ -1800,6 +1800,49 @@ Loop 启动的话就可以 头尾连接了。
 拖尾组件：
 ![](./images/1710407708935.png)
 
-## 45. 为游戏物体制作简单的动画吧I(Animation)
+## 45. 为游戏物体制作简单的动画吧I(Animation（旧版）)
+Animation组件
+![](./images/1710584804616.png)
+左上角:
+窗口 -> 动画 -> 动画
+![](./images/1710585020955.png)
 
-## 46. 为游戏物体制作简单的动画吧II(Animator)
+创建一个动画，假设是从左到右移动的一个动画。
+![enter description here](./images/1710585247653.png)
+
+所以添加属性，选transform即可。
+![](./images/1710585226583.png)
+
+两种方法去做动画：
+1.手动:
+![](./images/1710585422734.png)
+
+2.录制：
+![](./images/1710585435470.png)
+
+动画文件中存在好几种不同的模式：
+![](./images/1710585669543.png)
+
+你还可以通过曲线来看变化。
+![](./images/1710585703117.png)
+然后，Animation是可以通过代码的方式去运用的。
+
+代码如下：
+
+```C#
+void start()
+{
+
+}
+
+void Update()
+{
+ if(Input.GetMouseButtonDown(0))
+ {
+ 	//动画文件名为right
+ 	GetComponent<Animation>().Play("right")
+ }
+}
+```
+
+## 46. 为游戏物体制作简单的动画吧II(Animator（新版）)
