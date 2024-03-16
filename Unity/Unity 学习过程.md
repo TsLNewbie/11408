@@ -1847,3 +1847,50 @@ void Update()
 
 ## 46. 为游戏物体制作简单的动画吧II(Animator（新版）)
 
+>新的Animator组件和旧的Animation组件差别还挺大的。
+
+Animator组件
+![](./images/1710601781627.png)
+此时就需要创建一个动画控制器。![](./images/1710601838735.png)
+
+点进去里面就有这样的画面：
+![](./images/1710601871726.png)
+而做动画的内容和旧的Animation组件所学的内容一样。
+但是在一些方面又不同：
+![](./images/1710601961694.png)
+
+之后创建两个动画文件，假设一个是 Right 一个是Left
+此时打开控制器文件：
+![](./images/1710602127344.png)
+
+>以上的方块一般叫做：动画状态（是一个一个动画组成）
+
+进去就播放right的动画。
+![](./images/1710602308433.png)
+
+如果想用left当作动画开头，就对left状态按右键然后选为**图层默认状态**即可。
+
+然后同样的也存在脚本控制：
+
+
+```c#
+public class AnimatorTest : MonoBehaviour
+{
+    private Animator animator;
+
+    private void Start()
+    {
+        //获取动画器组件
+        animator = GetComponent<Animator>();
+    }
+    private void Update()
+    {
+	    
+        if (Input.GetMouseButtonDown(0))
+        {
+		    //这个（）里得是字符串string
+            animator.Play("right");
+        }
+    }
+}
+```
