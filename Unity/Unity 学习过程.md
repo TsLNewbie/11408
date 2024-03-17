@@ -2316,3 +2316,7 @@ public class PlayerControl : MonoBehaviour
 
 }
 ```
+
+>接下来就会导航移动了！
+
+## 56.网格链接与动态障碍物
