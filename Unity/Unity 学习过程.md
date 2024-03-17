@@ -2148,3 +2148,46 @@ Mask（遮罩）：Avatar Mask
 然后把这个文件给到 New Layer的Mask里，就可以了。
 
 之后挥手动作就可以和移动动作一起了（边跑边挥手）
+
+## 53.你走哪，我指哪，反向动力学
+假设是这样的一个场景：一人一球
+![](./images/1710681153714.png)
+
+我想保证人无论怎么移动，他都看向球体，或者，手指向球体。
+
+>为什么是叫反向动力学？
+>我们动手，是从手臂，手肘，手腕去动手的。
+>但是Unity里是先手，然后手腕，手肘，手臂。
+>是一个反向的控制。
+
+接下来怎么做？
+首先去拿到目标物体（Sphere）的位置组件（Transform）
+```c#
+public Transform target;
+```
+![](./images/1710681422931.png)
+
+然后打开 动画控制器里的 IK Pass
+![](./images/1710681481019.png)
+
+附上代码，通过代码运行：
+```c#
+//IK写到这个方法内
+//int layerIndex 是某层的意思
+private void OnAnimatorIK(int layerIndex)
+{
+    //设置头部IK(权重)
+    //1就是让这个头部IK生效
+    animator.SetLookAtWeight(1);
+    //设置看向的位置
+    animator.SetLookAtPosition(target.position);
+}
+
+```
+
+![](./images/1710681696780.png)球：你瞅啥
+ 人：瞅你咋地
+ 
+ 但如果人没办法"看到"球体，就不会盯着球体了。
+ 
+ > 没想到吧，这种瞪着你的效果，其实就这么简单就可以做出来了。
