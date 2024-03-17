@@ -2191,3 +2191,41 @@ private void OnAnimatorIK(int layerIndex)
  但如果人没办法"看到"球体，就不会盯着球体了。
  
  > 没想到吧，这种瞪着你的效果，其实就这么简单就可以做出来了。
+
+
+手部上也可以这样做，但是有些区别：
+```c#
+private void OnAnimatorIK(int layerIndex)
+{
+    //设置头部IK(权重)
+    //1就是让这个头部IK生效
+    animator.SetLookAtWeight(1);
+    //设置看向的位置
+    animator.SetLookAtPosition(target.position);
+    //设置右手IK权重
+    animator.SetIKPositionWeight(AvatarIKGoal.RightHand,1);
+    //是否需要影响旋转?
+    animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+    //设置右手IK（位置）
+    animator.SetIKPosition(AvatarIKGoal.RightHand,target.position);
+    //设置右手IK（旋转）
+    animator.SetIKRotation(AvatarIKGoal.RightHand,target.rotation);
+}
+```
+
+最后效果：
+![](./images/1710682152050.png)
+人：你...要牵手吗
+球：...滚。
+
+> IK貌似用的比较少，更多是用商城里的IK插件。
+
+
+
+## 54.给地面涂上颜色，导航网格的使用
+
+> 不单只提供了位置信息，也直接给你位置的移动。
+> 你人在一个位置，你点击一下，人会走到你点击的位置。
+> 或者
+> 让NPC移动到你点击的位置。
+> 甚至如果途中有障碍，会自动绕过障碍到达目的地。
