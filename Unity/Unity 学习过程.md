@@ -1894,3 +1894,149 @@ public class AnimatorTest : MonoBehaviour
     }
 }
 ```
+
+## 47.让角色动起来！角色动画的使用
+
+>本章节运用的资源：Character Pick: Free Sample
+
+操作和上两章是一样的。
+然后直到你给一个预设体提供了动画控制器，点开控制器。
+
+然后拖拽一个站立动画作为 开始动画，就可以获得一个站立的小人了。
+![](./images/1710604016943.png)
+![](./images/1710604057497.png)
+
+然后我们再加上一个动画状态，此时我想要控制怎么办呢？
+![](./images/1710604099007.png)
+对着idle状态点击右键, Make Transition(创建过渡)
+![](./images/1710604275661.png)
+这个意思是什么？就是idle动画结束后，就会播放pickup动画。
+
+那么如果这样呢：
+![](./images/1710604399790.png)
+结果就会变成：idle动画->pickup动画->idle动画->pickup动画....
+
+这样不行，我们得加点条件：点开这个Parameters:
+![](./images/1710604615636.png)
+
+在加号部分点开，然后选中Trigger（触发器）类型，取名为pickup：
+![](./images/1710604674897.png)
+
+![](./images/1710604758648.png)
+在condition位置选择pickup，接下来就不会自动的过渡到pickup的动画了。
+>pickup其实是一个Trigger参数，触发和不触发（False,true)
+>但和bool值不同的是，触发后会自动关掉。
+
+脚本代码控制：
+```c#
+private void Update()
+{
+    if (Input.GetKeyDown(KeyCode.F))
+    {
+        //触发pickup参数
+        GetComponent<Animator>().SetTrigger("pickup");
+    }
+}
+```
+
+虽然脚本控制了，但是有延迟（具体来说就是：idle动画结束后才会执行pickup动画）
+这时候就需要这个：把Has Exit Time 去掉即可。
+![](./images/1710605294742.png)
+
+接下来就是会立刻执行pickup的动画了。
+
+## 48.使用按键来控制角色运动吧！
+
+延续上述提过的动画控制器，然后接下来就可以这样做：
+![](./images/1710606128956.png)
+
+1.创建一个bool值的 isRun变量。
+2.这个过渡线 其中的Conditions 添加 isRun 为 true
+3.另一个过渡线 的 Conditions 添加 isRun 为 false
+4.把两边的 Has Exit Time 都去掉。
+
+接下来就是脚本代码：
+```c#
+public class PlayerControl2 : MonoBehaviour
+{
+    //声明一个animator
+    private Animator animator;
+
+    private void Start()
+    {
+        //这个得写！如果不先赋值，就没办法获取值
+        animator = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        //水平轴
+        float horizontal = Input.GetAxis("Horizontal");
+
+        //垂直轴
+        float vertical = Input.GetAxis("Vertical");
+
+        //向量(只影响X,Z轴）
+        Vector3 dir = new Vector3(horizontal, 0, vertical);
+
+        //当用户按下了方向键
+        if (dir != Vector3.zero)
+        {
+            //面向向量(四元数）
+            //旋转
+            transform.rotation = Quaternion.LookRotation(dir);
+            //播放跑步动画
+            animator.SetBool("IsRun",true);
+
+            //朝向前方移动 (这个time.deltatime就把这个单位改成秒了。
+            transform.Translate(Vector3.forward * 2 * Time.deltaTime);
+        }else
+        {
+            //播放站立动画
+            animator.SetBool("IsRun",false);
+        }
+    }
+
+}
+```
+
+之后你就可以获得一个拥有着动画效果且可以移动的小人了！
+
+但是如果你实际试了试，是有点不跟手的，这其中的原因是：动画操作器里的：
+![](./images/1710607335265.png)
+Transition Duration(过渡持续时间) = 直接修改为0
+
+这样就可以跟手（虽然还是差一点）了，但是失去了动画过渡，就会有着很明显的违和感，生硬感（动画切换的时候）
+
+## 49.动画不按理想来？剪辑的常用设置
+选中一个动画文件：
+![](./images/1710670924016.png)
+选中 动画类型：![](./images/1710670960525.png)
+
+人形动画单独分出来了。(人形用的人很多)
+泛型是支持所有类型的动画播放。(门打开的动画，玻璃击碎的动画)
+
+第二个 Avator 默认即可
+
+![](./images/1710671318983.png)
+红线往下就是**动画剪辑。**
+
+循环时间部分：
+![](./images/1710671417984.png)如果绿灯就匹配，如果黄灯就可能不太好匹配，而红灯就是完全不匹配了。
+
+如果你在播放的时候，动画进行旋转，那就是他自带的旋转：
+只要把根变换旋转中的 烘焙成的动作 勾选上，就可以去掉旋转效果了。
+![](./images/1710671516574.png)
+
+而如果不想让他Y轴动，也是同样的方法。
+
+>无论你改了什么，都得记得去点上**应用**。
+
+## 50.角色挥拳特效？曲线和帧时间的使用
+还是在Animation里的内容：
+![](./images/1710671734130.png)
+可以打开曲线的画面：
+![](./images/1710671770969.png)
+
+假设曲线是这样的，且取名为 Test。
+![](./images/1710671912505.png)
