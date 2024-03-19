@@ -2553,3 +2553,5 @@ Navigation 导航：基本用不着：
 ![](./images/1710854245918.png)
 ![](./images/1710854263706.png)
 
+在InputField里有占位文本（Placeholder)：
+![](./images/1710854321128.png)
