@@ -2541,4 +2541,15 @@ Navigation 导航：基本用不着：
 
 需要注意的是，这个是选择Object，所以你需要把脚本附在某个物体里。
 ![](./images/1710853904450.png)
-这次我们可以把脚本Buttontest附在Canvas上，也是可以的。
+这次我们可以把脚本Buttontest附在Canvas上，也是可以的。（也可以挂载到Button物体上）
+
+然后添加Canvas，选中组件中的ButtonTest，再选里面的ButtonClick函数！就可以触发了。
+![](./images/1710854092251.png)
+>也就是说ButtonClick函数是可以有不同名字的。这个按钮是可以针对触发指定函数。
+
+## 62.输入账号和密码？文本框的应用
+
+这次创建的文件名叫：Input Field
+![](./images/1710854245918.png)
+![](./images/1710854263706.png)
+
