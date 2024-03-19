@@ -2524,3 +2524,4 @@ Image + Button 组件
 
 >番外：如果你图片导进来发现用不着，那么可能Texture Type纹理类型：
 >![](./images/1710853339896.png)
+>要保证是 Sprite 类型才能用。
