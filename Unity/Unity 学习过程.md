@@ -6,6 +6,9 @@ grammar_cjkRuby: true
 
 参考视频：[Unity教程 零基础带你从入门到大神](https://www.bilibili.com/video/BV1gQ4y1e7SS?p=7&spm_id_from=pageDriver&vd_source=d1002d9c1ba92da4ba3fca4fdca6d750)
 参考书籍：新印象-Unity2020游戏开发基础与实战
+
+
+[toc!]
 # 第二章 打造3D游戏世界
 ## 06. 初中就学过？记录位置的坐标系
 
@@ -376,7 +379,7 @@ public class TEST : MonoBehaviour
 >额外内容：
 >如果有东西一定要先初始化，那么你就得放到 Awake() 方法里，最好不要放在 OnEnable()方法里。
 
-# 16.别搞错了，给游戏物体做个标记
+## 16.别搞错了，给游戏物体做个标记
 在物体的头部位置点一下物体，就可以提供出一个**物体标记。**
 ![](./images/1709995849799.png)
 
@@ -1387,7 +1390,7 @@ private void Update()
     player.SimpleMove(dir * 2);
 }
 ```
-
+# 第五章 物理系统
 ## 37.物理系统！给物体添加重力
 
 在之前提到过，Unity有一个组件：Rigidbody
@@ -1717,7 +1720,7 @@ public class RayTest : MonoBehaviour
     }
 }
 ```
-
+# 第六章 例子系统
 ## 43.粒子系统
 > 创建->Effect效果0->Particle System粒子系统
 
@@ -1800,6 +1803,7 @@ Loop 启动的话就可以 头尾连接了。
 拖尾组件：
 ![](./images/1710407708935.png)
 
+# 第七章 动画系统
 ## 45. 为游戏物体制作简单的动画吧I(Animation（旧版）)
 Animation组件
 ![](./images/1710584804616.png)
@@ -2221,7 +2225,7 @@ private void OnAnimatorIK(int layerIndex)
 > IK貌似用的比较少，更多是用商城里的IK插件。
 
 
-
+# 第八章 导航系统
 ## 54.给地面涂上颜色，导航网格的使用
 
 > 不单只提供了位置信息，也直接给你位置的移动。
@@ -2416,3 +2420,14 @@ Generated Off Mesh Links(生成分离网格链接)
 还有：回到Player物体的组件：Nav Mesh Agent
 ![](./images/1710835273021.png)
 在最后一行 Area Mask（区域遮罩），就可以调整哪些区域是导航不能去了，那些是可以去的。
+
+>导航相关的东西就学完了
+
+
+# 第九章 UI游戏界面系统
+## 58.想绘UI？先准备一张画布
+
+>如同创建物体一样，UI也是如此。
+
+UI最重要先创建一个**画布(Canvas)：**
+![](./images/1710840205801.png)
