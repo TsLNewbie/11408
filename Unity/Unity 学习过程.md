@@ -2727,7 +2727,10 @@ Scroll View 物体里的：
 ![enter description here](./images/1710858817137.png)
 
 
-
+组件：Horiztional Layout Group
 水平布局:
 ![](./images/1710859064486.png)
+
+组件：Grid Layout Group
+![](./images/1710859176356.png)
 
