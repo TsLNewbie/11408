@@ -2587,7 +2587,7 @@ public TMP_InputField newInputField;
 
 
 ## 63.选择你的国籍吧！选项与下拉框的使用
-
+### Toggle 切换
 创建 UI -> Toggle(切换)
 ![](./images/1710855015999.png)
 Toggle组件：
@@ -2600,10 +2600,26 @@ Toggle组件：
 
 总不可能两个都选吧！那么怎么去做成唯一选择呢？
 
-此时需要多一个组件： Toggle Group
+此时需要多一个组件： **Toggle Group**
 ![](./images/1710855226935.png)
 生成组件，并拖拽到Group里。
 而另外一个Button这样做就可以了：
 ![](./images/1710855278784.png)
 
 此时就只能二选一了。
+
+
+### Dropdown 下拉列表
+
+创建 UI -> Dropdown
+![](./images/1710855512090.png)
+
+![](./images/1710855538842.png)
+![](./images/1710855554791.png)
+
+手动添加，当然也可以脚本代码添加：
+
+其中有个项图像：如何让选项里存在图像？
+在Dropdown物体里有这个Template -> Item ，打开后创建一个Image物体：
+![](./images/1710856012938.png)
+![](./images/1710856090252.png)
