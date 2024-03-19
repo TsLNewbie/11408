@@ -2413,3 +2413,6 @@ Generated Off Mesh Links(生成分离网格链接)
 也会这样：
 ![](./images/1710835199124.png)
 
+还有：回到Player物体的组件：Nav Mesh Agent
+![](./images/1710835273021.png)
+在最后一行 Area Mask（区域遮罩），就可以调整哪些区域是导航不能去了，那些是可以去的。
