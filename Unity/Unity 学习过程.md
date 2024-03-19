@@ -2552,6 +2552,19 @@ Navigation 导航：基本用不着：
 这次创建的文件名叫：Input Field
 ![](./images/1710854245918.png)
 ![](./images/1710854263706.png)
-
+![](./images/1710854493624.png)
 在InputField里有占位文本（Placeholder)：就是 **请输入...** 的那个东西：
 ![](./images/1710854321128.png)
+附上脚本：
+```c#
+using UnityEngine.UI; //UI组件
+...
+public class ButtonTest : MonoBehaviour
+{
+	public InputField InputField;//这样才能获取InputField物体
+   public void TextChanged()
+    {
+        Debug.Log(InputField.text); //输出InputField的内容
+    }
+}
+```
