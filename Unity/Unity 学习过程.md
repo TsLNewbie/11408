@@ -2370,3 +2370,25 @@ Generated Off Mesh Links(生成分离网格链接)
 不妨我们在把另一个平台也加上Generate OffMeshLinks，然后我们把 Jump Distance调整为5m
 ![](./images/1710834093099.png)
 这样两边就可以跳来跳去了。
+
+那我们做一个特定距离或者特定位置的跳跃，怎么做呢？
+举个例子：假设就是图中的情况。
+![](./images/1710834191167.png)
+
+此时我们需要一个组件:Off Mesh Link
+![](./images/1710834327971.png)
+其中:Start和End是必填的。
+
+- Cost Override (成本覆盖)
+- Bidirectional(双向)
+- Activated(已激活)
+- Auto Update Position（自动更新位置）
+	- 如果不打开这个，当你移动Start和End的物体时，是不会更新位置的。
+	- 如果打开了，当你移动Start和End的物体，会随时更新位置。
+- Navigation Area(导航区域)
+
+接下来进行导航就可以这样了：
+![](./images/1710834440168.png)
+
+![](./images/1710834469947.png)
+
