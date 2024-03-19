@@ -2648,7 +2648,12 @@ Toggle组件：
 
 
 ### Scroll View 滚动视图
+
 ![](./images/1710856988718.png)
+![](./images/1710857109320.png)
 
 
->比如说DNF选择**服务器**，或者聊天框。
+>比如说**DNF选择服务器**，或者聊天框。
+
+Scroll View 物体里的：
+![](./images/1710857155226.png)其中View port 是 可视区域，而Content是完整区域（完整内容的）
