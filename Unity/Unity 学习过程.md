@@ -2518,10 +2518,13 @@ Image + Button 组件
 	- Interactable 可交互
 		- 如果关掉的话就没办法交互了。
 	-  Transition 过渡
-		-  过渡可以有不同的效果，比如说Sprite Swap(图片过渡)
+		-  过渡可以有不同的效果，比如说Sprite Swap(图片过渡)，Color Hint（颜色变化）
 		-  鼠标移动，点击，有不同的颜色显示。
 
 
 >番外：如果你图片导进来发现用不着，那么可能Texture Type纹理类型：
 >![](./images/1710853339896.png)
 >要保证是 Sprite 类型才能用。
+
+Navigation 导航：基本用不着：
+![enter description here](./images/1710853527224.png)
