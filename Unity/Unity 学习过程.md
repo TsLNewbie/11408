@@ -2725,3 +2725,9 @@ Scroll View 物体里的：
 ![](./images/1710858885635.png)
 接下来你里面的Image进行变化，就会影响到其他的Image了！
 ![enter description here](./images/1710858817137.png)
+
+
+
+水平布局:
+![](./images/1710859064486.png)
+
