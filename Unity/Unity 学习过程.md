@@ -2343,9 +2343,16 @@ Move Threshold(移动阈值)：当你移动多远距离，才会进行新的bake
 
 Time To Stationary(静止时间)：当你物体静止一定时间，才会进行新的bake。
 
-Carve Only Statonary（仅在静止时间切割）
+Carve Only Statonary（仅在静止时间切割）：不选上就是怎么动都会进行bake。
 
 两边区域被隔开了。
 ![](./images/1710833418396.png)
 当我们移动门的时候你看：
 ![](./images/1710833436561.png)
+
+### 网格链接(Mesh Links)
+![](./images/1710833780229.png)
+Generated Off Mesh Links(生成分离网格链接)
+- Drop Height 掉落高度
+	- 可以从多高的地方跳下来
+- Jump Distance 跳跃距离
