@@ -2721,6 +2721,7 @@ Scroll View 物体里的：
 这时候就需要
 组件：Vertical Layout Group 
 （当然还要一个是水平的）
-
+![](./images/1710858899015.png)
+![](./images/1710858885635.png)
 接下来你里面的Image进行变化，就会影响到其他的Image了！
 ![enter description here](./images/1710858817137.png)
