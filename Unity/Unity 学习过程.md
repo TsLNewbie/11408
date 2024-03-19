@@ -2504,3 +2504,20 @@ Text里可以加**HTML来调整~**
 ### 新版字体：
 是依赖于 TMP的
 ![](./images/1710852560965.png)
+
+TextMeshPro- Text（UI）组件：
+![](./images/1710852590251.png)
+
+## 61.点击他！按钮的使用
+Image + Button 组件
+![](./images/1710852958526.png)
+![](./images/1710852910263.png)
+![](./images/1710852899128.png)
+
+- Button组件：
+	- Interactable 可交互
+		- 如果关掉的话就没办法交互了。
+	-  Transition 过渡
+		-  过渡可以有不同的效果，比如说Sprite Swap
+		-  鼠标移动，点击，有不同的颜色显示。
+	-  
