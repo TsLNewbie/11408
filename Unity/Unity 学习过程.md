@@ -2527,4 +2527,8 @@ Image + Button 组件
 >要保证是 Sprite 类型才能用。
 
 Navigation 导航：基本用不着：
-![enter description here](./images/1710853527224.png)
+![](./images/1710853527224.png)
+
+接下来就是用键盘上下就可以用上了。
+![](./images/1710853613058.png)
+
