@@ -2623,3 +2623,32 @@ Toggle组件：
 在Dropdown物体里有这个Template -> Item ，打开后创建一个Image物体：
 ![](./images/1710856012938.png)
 ![](./images/1710856090252.png)
+
+然后把图像，关联到Item image项图像里
+![](./images/1710856145977.png)
+
+就可以了。
+
+>Item Image 项图像
+![](./images/1710856396998.png)
+
+## 65.动起来，滚动条与滚动视图的使用
+
+### Slider滚动条
+![](./images/1710856893875.png)
+
+![](./images/1710856506661.png)
+![](./images/1710856530062.png)
+![](./images/1710856573538.png)
+
+### Scrollbar滚动条
+往往会和滑动视图来用：
+创建UI -> Scrollbar
+![](./images/1710856864227.png)
+
+
+### Scroll View 滚动视图
+![](./images/1710856988718.png)
+
+
+>比如说DNF选择**服务器**，或者聊天框。
