@@ -2518,7 +2518,7 @@ Image + Button 组件
 	- Interactable 可交互
 		- 如果关掉的话就没办法交互了。
 	-  Transition 过渡
-		-  过渡可以有不同的效果，比如说Sprite Swap
+		-  过渡可以有不同的效果，比如说Sprite Swap(图片过渡)
 		-  鼠标移动，点击，有不同的颜色显示。
 
 
