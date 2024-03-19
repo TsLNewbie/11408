@@ -2723,4 +2723,4 @@ Scroll View 物体里的：
 （当然还要一个是水平的）
 
 接下来你里面的Image进行变化，就会影响到其他的Image了！
-![enter description here](https://markdown.xiaoshujiang.com/img/spinner.gif "[[[1710858800582]]]" )
+![enter description here](./images/1710858817137.png)
