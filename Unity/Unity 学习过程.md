@@ -2356,3 +2356,17 @@ Generated Off Mesh Links(生成分离网格链接)
 - Drop Height 掉落高度
 	- 可以从多高的地方跳下来
 - Jump Distance 跳跃距离
+
+如果要做这种可以跳跃的地方，就需要这样做：
+选择某个物体：
+![](./images/1710833941798.png)
+
+并勾选上 Generate OffMeshLinks 。
+
+接下来重新bake，就可以看到这样的效果：
+![](./images/1710834011715.png)
+
+
+不妨我们在把另一个平台也加上Generate OffMeshLinks，然后我们把 Jump Distance调整为5m
+![](./images/1710834093099.png)
+这样两边就可以跳来跳去了。
