@@ -2561,6 +2561,7 @@ using UnityEngine.UI; //UI组件
 ...
 public class ButtonTest : MonoBehaviour
 {
+	
 	public InputField InputField;//这样才能获取InputField物体
    public void TextChanged()
     {
@@ -2568,3 +2569,41 @@ public class ButtonTest : MonoBehaviour
     }
 }
 ```
+
+> 要调用对象，必须得用public
+
+然后InputField组件也附上这个：
+![](./images/1710854743286.png)
+![](./images/1710854768087.png)
+如果要用新版的，代码需要调整：
+
+```c#
+using TMPro;
+
+...
+
+public TMP_InputField newInputField;
+```
+
+
+## 63.选择你的国籍吧！选项与下拉框的使用
+
+创建 UI -> Toggle(切换)
+![](./images/1710855015999.png)
+Toggle组件：
+![](./images/1710855086140.png)![](./images/1710855098388.png)
+
+>中间需要注意的是 Is On （是开启的）。
+
+假设是这样的情况：
+![](./images/1710855162021.png)
+
+总不可能两个都选吧！那么怎么去做成唯一选择呢？
+
+此时需要多一个组件： Toggle Group
+![](./images/1710855226935.png)
+生成组件，并拖拽到Group里。
+而另外一个Button这样做就可以了：
+![](./images/1710855278784.png)
+
+此时就只能二选一了。
