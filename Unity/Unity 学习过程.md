@@ -2320,3 +2320,32 @@ public class PlayerControl : MonoBehaviour
 >接下来就会导航移动了！
 
 ## 56.网格链接与动态障碍物
+
+本章场景：
+![](./images/1710833010048.png)
+
+我们假设中间这个墙是 Door，那么我先让Door物体的static 改回到 nothing。（原本为 Navigation static）
+
+重新bake 一下就会变成这样了，是可以穿过的：
+![](./images/1710833163127.png)
+
+那怎么办呢？
+我们让这个door物体 添加一个组件： Nav Mesh Obstacle
+![](./images/1710833204056.png)
+
+接下来试试导航移动，就会过不去了。
+![](./images/1710833262400.png)
+
+接下来重点来了：打开这个Carve（切割）
+![](./images/1710833367645.png)
+接下来就会变成 动态的导航区域了。
+Move Threshold(移动阈值)：当你移动多远距离，才会进行新的bake。
+
+Time To Stationary(静止时间)：当你物体静止一定时间，才会进行新的bake。
+
+Carve Only Statonary（仅在静止时间切割）
+
+两边区域被隔开了。
+![](./images/1710833418396.png)
+当我们移动门的时候你看：
+![](./images/1710833436561.png)
