@@ -238,3 +238,13 @@ Summary
 >所有地址的集合——虚拟地址空间（virtual address space）
 
 ![](./images/1716365502638.png)
+### 字节 Byte
+
+>1 Byte = 8 bit
+
+![](./images/1716365821132.png)
+### 16进制数 Hexadecimal Notation
+>十六进制好处：节省显示位置，方便与2进制转换。
+
+![](./images/1716365943408.png)
+
