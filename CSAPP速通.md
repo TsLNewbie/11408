@@ -1400,6 +1400,8 @@ case 4 ， case 6 相同，因此使用相同的标号
 
 ![](./images/1716544691336.png)
 
+![](./images/1716544989430.png)
+
 >callq 对应 multstore函数的调用
 >指令call ： 
 >1.将函数multstore的第一条指令的地址存入到程序指令%rip中，实现函数调用。
