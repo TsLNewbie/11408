@@ -3606,6 +3606,28 @@ crt = c runtime
 然后将 CPU 的控制权 转移到 prog 的程序开头
 随后程序prog开始执行。
 ## 7.2 可重定位目标文件
+
+图中代码定义了两个全局变量 count 和 value。
+函数func only printf
+main 函数中定义了两个**局部静态变量** a 和 b
+
+![](./images/1717074968475.png)
+使用gcc  翻译这个源文件 ——> 可重定位目标文件
+
+wc（word count）-c 看看main.o的大小( -c =多少字节)
+
+![](./images/1717075146226.png)
+### 可重定位目标文件的结构
+
+> ELF header，不同的sections 和 描述这些section信息的表
+
+![](./images/1717075186492.png)
+readelf -h —— 读elf，然后只读header。
+
+![](./images/1717075298484.png)
+
+
+
 ## 7.3 符号和符号表
 ## 7.4 符号解析与静态库
 ## 7.5 静态库的解析过程
